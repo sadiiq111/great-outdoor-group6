@@ -89,15 +89,21 @@ body {
   background: #2d5016;
   color: white;
   padding: 12px 24px;
+  min-height: 44px;
   border-radius: 6px;
   text-decoration: none;
   font-size: 16px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btn-link {
   color: white;
   text-decoration: underline;
   font-size: 16px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* SEASONAL NOTE */
@@ -121,6 +127,17 @@ body {
 .note-label {
   font-weight: bold;
   color: #e67e00;
+}
+
+/* GLOBAL IMAGE FIX */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* NO HORIZONTAL SCROLL */
+html, body {
+  overflow-x: hidden;
 }
 
 /* CONTAINER */
@@ -438,12 +455,15 @@ body {
 
 .filter-btn {
   padding: 8px 18px;
+  min-height: 44px;
   border-radius: 20px;
   border: 1px solid #ddd;
   background: white;
   cursor: pointer;
   font-size: 14px;
   color: #333;
+  display: inline-flex;
+  align-items: center;
 }
 
 .filter-btn.active {
@@ -471,6 +491,10 @@ body {
   padding: 4px;
   flex-direction: column;
   gap: 5px;
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .hamburger span {

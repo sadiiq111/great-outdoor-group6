@@ -173,20 +173,13 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => nav.classList.remove('open'));
+  });
+</script>
 </body>
-</html>
-    ...
-    <script src="script.js"></script>
-
-    <!-- ADD THIS BELOW script.js -->
-    <script>
-      const hamburger = document.getElementById('hamburger');
-      const nav = document.getElementById('nav');
-      hamburger.addEventListener('click', () => nav.classList.toggle('open'));
-      nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => nav.classList.remove('open'));
-      });
-    </script>
-
-  </body>
 </html>

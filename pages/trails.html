@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Trails - The Great Outdoors</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">The Great Outdoors</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Find Trails</a>
+      <a href="responsible.html">Responsible Recreation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h2 class="trails-heading">Explore Trails</h2>
+  <p class="trails-subheading">Discover 8 amazing trails across the Pacific Northwest. From easy family walks to challenging alpine adventures, there's something for everyone.</p>
+
+  <div class="filters">
+    <span class="filter-label">🔽 Filters:</span>
+    <button class="filter-btn active" onclick="filterTrails('all')">All Difficulty</button>
+    <button class="filter-btn" onclick="filterTrails('hidden')">Hidden Gems Only</button>
+    <button class="filter-btn" onclick="filterTrails('distance')">Distance</button>
+  </div>
+
+  <div class="trail-cards" id="trail-cards">
+    <div class="trail-card" data-hidden="false">
+      <a href="trail-detail.html?trail=rattlesnake">
+        <img src="../images/trail-1.jpg" alt="Rattlesnake Ledge">
+      </a>
+      <div class="trail-info">
+        <h3>Rattlesnake Ledge</h3>
+        <p class="location">📍 North Bend, WA</p>
+        <span class="difficulty moderate">Moderate</span>
+        <div class="trail-stats">
+          <span>🏔️ 4.0 miles</span>
+          <span>⏱️ 2-3 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="false">
+      <a href="trail-detail.html?trail=wallace">
+        <img src="../images/trail-2.jpg" alt="Wallace Falls">
+      </a>
+      <div class="trail-info">
+        <h3>Wallace Falls</h3>
+        <p class="location">📍 Gold Bar, WA</p>
+        <span class="difficulty moderate">Moderate</span>
+        <div class="trail-stats">
+          <span>🏔️ 5.6 miles</span>
+          <span>⏱️ 3-4 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="false">
+      <a href="trail-detail.html?trail=lakeserene">
+        <img src="../images/trail-3.jpg" alt="Lake Serene">
+      </a>
+      <div class="trail-info">
+        <h3>Lake Serene</h3>
+        <p class="location">📍 Index, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="trail-stats">
+          <span>🏔️ 7.2 miles</span>
+          <span>⏱️ 4-5 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="true">
+      <span class="badge">⭐ Hidden Gem</span>
+      <a href="trail-detail.html?trail=ebeys">
+        <img src="../images/trail-4.jpg" alt="Ebey's Landing">
+      </a>
+      <div class="trail-info">
+        <h3>Ebey's Landing</h3>
+        <p class="location">📍 Whidbey Island, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="trail-stats">
+          <span>🏔️ 5.6 miles</span>
+          <span>⏱️ 2-3 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="false">
+      <a href="trail-detail.html?trail=snowlake">
+        <img src="../images/trail-5.jpg" alt="Snow Lake">
+      </a>
+      <div class="trail-info">
+        <h3>Snow Lake</h3>
+        <p class="location">📍 Snoqualmie Pass, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="trail-stats">
+          <span>🏔️ 7.2 miles</span>
+          <span>⏱️ 4-5 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="false">
+      <a href="trail-detail.html?trail=twinfalls">
+        <img src="../images/trail-6.jpg" alt="Twin Falls">
+      </a>
+      <div class="trail-info">
+        <h3>Twin Falls</h3>
+        <p class="location">📍 North Bend, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="trail-stats">
+          <span>🏔️ 2.6 miles</span>
+          <span>⏱️ 1-2 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="true">
+      <span class="badge">⭐ Hidden Gem</span>
+      <a href="trail-detail.html?trail=oysterdome">
+        <img src="../images/trail-7.jpg" alt="Oyster Dome">
+      </a>
+      <div class="trail-info">
+        <h3>Oyster Dome</h3>
+        <p class="location">📍 Blanchard Mountain, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="trail-stats">
+          <span>🏔️ 6.4 miles</span>
+          <span>⏱️ 3-4 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="trail-card" data-hidden="false">
+      <a href="trail-detail.html?trail=franklinfalls">
+        <img src="../images/trail-8.jpg" alt="Franklin Falls">
+      </a>
+      <div class="trail-info">
+        <h3>Franklin Falls</h3>
+        <p class="location">📍 Snoqualmie Pass, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="trail-stats">
+          <span>🏔️ 2.0 miles</span>
+          <span>⏱️ 1-2 hours</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
+</footer>
+
+<script>
+function filterTrails(type) {
+  const cards = document.querySelectorAll('.trail-card');
+  const btns = document.querySelectorAll('.filter-btn');
+
+  btns.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (type === 'all') {
+      card.style.display = 'block';
+    } else if (type === 'hidden') {
+      card.style.display = card.dataset.hidden === 'true' ? 'block' : 'none';
+    } else if (type === 'distance') {
+      card.style.display = 'block';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
+  ...
+    <script src="script.js"></script>
+
+    <!-- ADD THIS BELOW script.js -->
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const nav = document.getElementById('nav');
+      hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => nav.classList.remove('open'));
+      });
+    </script>
+
+  </body>
+</html>
+  

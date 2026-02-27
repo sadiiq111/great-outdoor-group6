@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trail Detail - The Great Outdoors</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">The Great Outdoors</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Find Trails</a>
+      <a href="responsible.html">Responsible Recreation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<section class="trail-hero">
+  <img id="trail-image" src="" alt="" class="trail-hero-img">
+  <div class="trail-hero-text">
+    <a href="trails.html" class="back-link">← Back to Trails</a>
+    <h1 id="trail-name"></h1>
+    <span id="trail-difficulty" class="difficulty"></span>
+  </div>
+</section>
+
+<main class="container">
+  <div class="trail-stats-bar">
+    <div class="stat">
+      <span class="stat-icon">🏔️</span>
+      <div class="stat-text">
+        <p class="stat-label">Distance</p>
+        <p class="stat-value" id="trail-distance"></p>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-icon">⏱️</span>
+      <div class="stat-text">
+        <p class="stat-label">Estimated Time</p>
+        <p class="stat-value" id="trail-time"></p>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-icon">📍</span>
+      <div class="stat-text">
+        <p class="stat-label">Location</p>
+        <p class="stat-value" id="trail-location"></p>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-icon">📅</span>
+      <div class="stat-text">
+        <p class="stat-label">Last Updated</p>
+        <p class="stat-value" id="trail-updated"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="trail-about">
+    <h2>About This Trail</h2>
+    <p id="trail-about"></p>
+  </div>
+
+  <div class="safety-notes">
+    <p class="safety-title">⚠️ Safety Notes</p>
+    <p id="trail-safety"></p>
+  </div>
+
+  <div class="seasonal-info">
+    <p class="seasonal-title">⚠️ Seasonal Information</p>
+    <p id="trail-seasonal"></p>
+  </div>
+
+  <div class="leave-no-trace">
+    <p class="lnt-title">🌿 Leave No Trace</p>
+    <p>Please practice Leave No Trace principles: pack out all trash, stay on designated trails, respect wildlife, and leave what you find. Help us preserve these beautiful places for future generations.</p>
+  </div>
+
+  <div class="recent-reviews">
+    <h2>Recent Reviews</h2>
+    <p class="reviews-empty"><em>Reviews and ratings coming soon. Check back later for community insights and trail conditions.</em></p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
+</footer>
+
+<script>
+const trails = {
+  rattlesnake: {
+    name: "Rattlesnake Ledge",
+    image: "../images/trail-1.jpg",
+    difficulty: "Moderate",
+    difficultyClass: "moderate",
+    distance: "4.0 miles",
+    time: "2-3 hours",
+    location: "North Bend, WA",
+    updated: "February 10, 2026",
+    about: "A popular trail offering stunning views of Rattlesnake Lake and the surrounding Cascade Mountains. The trail gains about 1,160 feet in elevation over 2 miles to reach the rocky ledge viewpoint.",
+    safety: "Stay back from cliff edges. Trail can be very crowded on weekends. Dogs must be leashed. No camping at the ledge.",
+    seasonal: "Best April through October. Snow possible November through March. Can be muddy in spring."
+  },
+  wallace: {
+    name: "Wallace Falls",
+    image: "../images/trail-2.jpg",
+    difficulty: "Moderate",
+    difficultyClass: "moderate",
+    distance: "5.6 miles",
+    time: "3-4 hours",
+    location: "Gold Bar, WA",
+    updated: "February 8, 2026",
+    about: "Experience the power of multiple waterfalls along this rewarding trail through old-growth forest. The main falls drops 265 feet and offers spectacular viewing platforms.",
+    safety: "Trail can be slippery near waterfalls. Stay on marked paths. Watch for wet rocks.",
+    seasonal: "Open year-round. Best spring through fall. Waterfalls most powerful in spring."
+  },
+  lakeserene: {
+    name: "Lake Serene",
+    image: "../images/trail-3.jpg",
+    difficulty: "Hard",
+    difficultyClass: "hard",
+    distance: "7.2 miles",
+    time: "4-5 hours",
+    location: "Index, WA",
+    updated: "February 12, 2026",
+    about: "A challenging trail leading to a stunning alpine lake surrounded by towering peaks. The trail features steep switchbacks and incredible views of Mount Index.",
+    safety: "Snow may be present year-round near the lake. Bring traction devices and layers. Start early to avoid afternoon thunderstorms.",
+    seasonal: "Best July through October. Snow lingers until late June. Trail closes in heavy winter conditions."
+  },
+  ebeys: {
+    name: "Ebey's Landing",
+    image: "../images/trail-4.jpg",
+    difficulty: "Easy",
+    difficultyClass: "easy",
+    distance: "5.6 miles",
+    time: "2-3 hours",
+    location: "Whidbey Island, WA",
+    updated: "February 6, 2026",
+    about: "A beautiful coastal loop trail offering sweeping views of the Strait of Juan de Fuca and the Olympic Mountains. This hidden gem features open prairie, beaches, and bluff views.",
+    safety: "Watch for unstable bluff edges. Trail can be muddy in winter. Strong winds common along the coast.",
+    seasonal: "Open year-round. Best spring through fall. Wildflowers bloom April through June."
+  },
+  snowlake: {
+    name: "Snow Lake",
+    image: "../images/trail-5.jpg",
+    difficulty: "Hard",
+    difficultyClass: "hard",
+    distance: "7.2 miles",
+    time: "4-5 hours",
+    location: "Snoqualmie Pass, WA",
+    updated: "February 14, 2026",
+    about: "One of the most popular hikes in the Alpine Lakes Wilderness. The trail climbs through forest and meadows to reach a stunning glacially carved lake surrounded by rocky peaks.",
+    safety: "Snow lingers into summer. Bring microspikes early in the season. Permit required on weekends May-October.",
+    seasonal: "Best July through October. Snow typically clears by late June. Permit required in summer."
+  },
+  twinfalls: {
+    name: "Twin Falls",
+    image: "../images/trail-6.jpg",
+    difficulty: "Easy",
+    difficultyClass: "easy",
+    distance: "2.6 miles",
+    time: "1-2 hours",
+    location: "North Bend, WA",
+    updated: "February 9, 2026",
+    about: "A short and rewarding trail leading to two spectacular waterfalls along the South Fork Snoqualmie River. The trail features suspension bridges and old-growth forest.",
+    safety: "Trail is paved in sections but can be slippery. Keep children away from cliff edges near the falls.",
+    seasonal: "Open year-round. Beautiful in all seasons. Most impressive in spring and after heavy rain."
+  },
+  oysterdome: {
+    name: "Oyster Dome",
+    image: "../images/trail-7.jpg",
+    difficulty: "Hard",
+    difficultyClass: "hard",
+    distance: "6.4 miles",
+    time: "3-4 hours",
+    location: "Blanchard Mountain, WA",
+    updated: "February 7, 2026",
+    about: "A hidden gem in the Chuckanut Mountains offering one of the best views in the region. The rocky summit provides panoramic views of the San Juan Islands, Puget Sound, and the Olympic Peninsula.",
+    safety: "Steep and strenuous with 1,800 feet elevation gain. Rocky sections require careful footing. Discover Pass required.",
+    seasonal: "Best April through October. Can be muddy in spring. Views best on clear days."
+  },
+  franklinfalls: {
+    name: "Franklin Falls",
+    image: "../images/trail-8.jpg",
+    difficulty: "Easy",
+    difficultyClass: "easy",
+    distance: "2.0 miles",
+    time: "1-2 hours",
+    location: "Snoqualmie Pass, WA",
+    updated: "February 14, 2026",
+    about: "Short, accessible trail to a stunning 70-foot waterfall. Perfect for families and those seeking a shorter adventure. The trail follows the South Fork Snoqualmie River through beautiful forest.",
+    safety: "Road to trailhead closes in winter. Check road conditions before visiting. Area can be icy in cold weather.",
+    seasonal: "Best May through October. Road to trailhead closed November through April."
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const trailKey = params.get('trail');
+const trail = trails[trailKey];
+
+if (trail) {
+  document.title = trail.name + " - The Great Outdoors";
+  document.getElementById('trail-image').src = trail.image;
+  document.getElementById('trail-image').alt = trail.name;
+  document.getElementById('trail-name').textContent = trail.name;
+  const diffEl = document.getElementById('trail-difficulty');
+  diffEl.textContent = trail.difficulty;
+  diffEl.className = 'difficulty ' + trail.difficultyClass;
+  document.getElementById('trail-distance').textContent = trail.distance;
+  document.getElementById('trail-time').textContent = trail.time;
+  document.getElementById('trail-location').textContent = trail.location;
+  document.getElementById('trail-updated').textContent = trail.updated;
+  document.getElementById('trail-about').textContent = trail.about;
+  document.getElementById('trail-safety').textContent = trail.safety;
+  document.getElementById('trail-seasonal').textContent = trail.seasonal;
+}
+</script>
+
+</body>
+</html>
+  ...
+    <script src="script.js"></script>
+
+    <!-- ADD THIS BELOW script.js -->
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const nav = document.getElementById('nav');
+      hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => nav.classList.remove('open'));
+      });
+    </script>
+
+  </body>
+</html>
+   
