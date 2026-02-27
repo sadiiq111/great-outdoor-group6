@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsible Recreation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">The Great Outdoors</a>
+  </div>
+</header>
+
+<main class="container">
+  <h1>Leave No Trace</h1>
+  <p>Respect nature and hike responsibly.</p>
+</main>
+
+</body>
+</html>
+  ...
+    <script src="script.js"></script>
+
+    <!-- ADD THIS BELOW script.js -->
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const nav = document.getElementById('nav');
+      hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => nav.classList.remove('open'));
+      });
+    </script>
+
+  </body>
+</html>
+   
