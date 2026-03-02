@@ -11,7 +11,12 @@
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="../index.html">The Great Outdoors</a>
-    <nav class="nav">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="nav" id="nav">
       <a href="../index.html">Home</a>
       <a href="trails.html">Find Trails</a>
       <a href="responsible.html">Responsible Recreation</a>
@@ -154,6 +159,13 @@
 </footer>
 
 <script>
+const hamburger = document.getElementById('hamburger');
+const nav = document.getElementById('nav');
+hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => nav.classList.remove('open'));
+});
+
 function filterTrails(type) {
   const cards = document.querySelectorAll('.trail-card');
   const btns = document.querySelectorAll('.filter-btn');
