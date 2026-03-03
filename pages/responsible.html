@@ -5,12 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Responsible Recreation - The Great Outdoors</title>
   <link rel="stylesheet" href="../styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .responsible-hero {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .responsible-hero img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 20%;
+      z-index: 0;
+    }
+
+    .responsible-hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.60);
+      z-index: 1;
+    }
+
+    .responsible-hero-text {
+      position: relative;
+      z-index: 2;
+      color: white;
+      padding: 0 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .responsible-hero-text h1 {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      color: white;
+    }
+
+    .responsible-hero-text p {
+      font-size: 20px;
+      opacity: 0.9;
+      color: white;
+    }
+
+    .responsible-content {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 16px;
+    }
+
+    .mission-statement {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .mission-statement h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .mission-statement p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #666;
+      max-width: 750px;
+      margin: auto;
+    }
+
+    .principles-heading {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 32px;
+      color: #222;
+    }
+
+    .principles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .principle-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: box-shadow 0.2s;
+    }
+
+    .principle-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .principle-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(45, 80, 22, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .principle-icon svg {
+      width: 28px;
+      height: 28px;
+      color: #2d5016;
+      stroke: #2d5016;
+    }
+
+    .principle-content h3 {
+      font-size: 17px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #222;
+    }
+
+    .principle-content p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .difference-banner {
+      background: rgba(45, 80, 22, 0.05);
+      border: 2px solid rgba(45, 80, 22, 0.2);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .difference-banner h3 {
+      font-size: 22px;
+      margin-bottom: 16px;
+      color: #222;
+    }
+
+    .difference-banner p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.7;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    @media (max-width: 768px) {
+      .responsible-hero { height: 50vh; }
+      .responsible-hero-text h1 { font-size: 30px; }
+      .responsible-hero-text p { font-size: 16px; }
+      .principle-card { flex-direction: column; gap: 12px; }
+      .principles-heading, .mission-statement h2 { font-size: 22px; }
+    }
+
+    @media (max-width: 480px) {
+      .responsible-hero { height: 45vh; }
+      .responsible-hero-text h1 { font-size: 24px; }
+      .responsible-hero-text p { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="../index.html">The Great Outdoors</a>
+    <a class="brand" href="../index.html">🏔️ The Great Outdoors</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span>
       <span></span>
@@ -18,56 +194,104 @@
     </button>
     <nav class="nav" id="nav">
       <a href="../index.html">Home</a>
-      <a href="trails.html">Find Trails</a>
-      <a href="responsible.html">Responsible Recreation</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
       <a href="about.html">About</a>
     </nav>
   </div>
 </header>
 
-<main class="container">
+<section class="responsible-hero">
+  <img src="../images/responsible-hero.jpg" alt="Hiking Trail">
+  <div class="responsible-hero-overlay"></div>
+  <div class="responsible-hero-text">
+    <h1>Responsible Recreation</h1>
+    <p>Protecting our trails and wilderness for future generations</p>
+  </div>
+</section>
 
-  <!-- ── TASK 2 CONTENT START ── -->
+<div class="responsible-content">
 
-  <section id="leave-no-trace">
-    <h2>Leave No Trace Principles</h2>
-    <p>
-      Leave No Trace is a set of outdoor ethics designed to protect wild spaces for future visitors and the wildlife that calls them home. The core idea is simple: your visit should leave the landscape looking exactly as you found it, or better. When every hiker makes small, thoughtful choices, the combined impact is enormous.
-    </p>
-    <p>
-      In practice, this means packing out everything you brought in — including food wrappers, fruit peels, and any other waste — and leaving natural objects like rocks, wildflowers, and pinecones exactly where you find them. Each element plays a role in the local ecosystem, and even small removals add up when multiplied across thousands of visitors.
-    </p>
-  </section>
+  <div class="mission-statement">
+    <h2>Our Commitment to Stewardship</h2>
+    <p>The Pacific Northwest's trails and wilderness areas are treasures that belong to all of us. With increasing use comes an increased responsibility to protect these natural spaces. By following Leave No Trace principles and practicing responsible recreation, we ensure that future generations can enjoy the same pristine beauty we experience today.</p>
+  </div>
 
-  <section id="trail-impact">
-    <h2>Trail Impact Reduction</h2>
-    <p>
-      Staying on marked and designated trails is one of the most effective ways to protect the land around you. Wandering off-path — even just a few feet — tramples fragile vegetation, compacts soil, and creates erosion that widens over time. Switchbacks are designed to reduce slope damage, so cutting them causes real harm even when it looks like a harmless shortcut.
-    </p>
-    <p>
-      Keeping noise levels low is equally important, both for wildlife and for fellow hikers seeking a peaceful experience. Loud music or shouting can disrupt animals during feeding, nesting, or resting — and it takes away the natural quiet that makes the outdoors worth visiting in the first place.
-    </p>
-  </section>
+  <h2 class="principles-heading">Seven Leave No Trace Principles</h2>
 
-  <section id="wildlife-responsibility">
-    <h2>Wildlife Responsibility</h2>
-    <p>
-      Always maintain a safe, respectful distance from any animal you encounter on the trail. A simple rule: if an animal changes its behavior because of your presence — moving away, freezing, or staring — you are already too close. This applies to all wildlife, from small birds and deer to bears and mountain lions.
-    </p>
-    <p>
-      Never feed wildlife, even animals that seem small or friendly. Human food is harmful to animals' health, and feeding them conditions them to associate people with food — a behavior that frequently leads to dangerous encounters and the removal or euthanasia of the animal. Observe quietly from a distance, and always let the animal's comfort take priority over your curiosity.
-    </p>
-  </section>
+  <div class="principles-list">
 
-  <!-- ── TASK 2 CONTENT END ── -->
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="footprints"></i></div>
+      <div class="principle-content">
+        <h3>Plan Ahead and Prepare</h3>
+        <p>Know the regulations and special concerns for the area you'll visit. Prepare for extreme weather, hazards, and emergencies. Schedule your trip to avoid times of high use.</p>
+      </div>
+    </div>
 
-</main>
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="mountain"></i></div>
+      <div class="principle-content">
+        <h3>Travel and Camp on Durable Surfaces</h3>
+        <p>Stay on designated trails and campsites. Walk single file in the middle of the trail, even when wet or muddy. Keep campsites small and at least 200 feet from lakes and streams.</p>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="trash-2"></i></div>
+      <div class="principle-content">
+        <h3>Dispose of Waste Properly</h3>
+        <p>Pack out all trash, leftover food, and litter. Deposit solid human waste in catholes dug 6 to 8 inches deep, at least 200 feet from water, camp, and trails.</p>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="camera"></i></div>
+      <div class="principle-content">
+        <h3>Leave What You Find</h3>
+        <p>Preserve the past — examine but don't touch cultural or historic structures and artifacts. Leave rocks, plants, and other natural objects as you find them.</p>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="flame"></i></div>
+      <div class="principle-content">
+        <h3>Minimize Campfire Impacts</h3>
+        <p>Use established fire rings, fire pans, or mound fires. Keep fires small and burn only sticks from the ground that can be broken by hand. Check local regulations — many areas prohibit campfires.</p>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="users"></i></div>
+      <div class="principle-content">
+        <h3>Respect Wildlife</h3>
+        <p>Observe wildlife from a distance. Never feed animals. Store food and trash securely. Control pets at all times, or leave them at home if required.</p>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-icon"><i data-lucide="leaf"></i></div>
+      <div class="principle-content">
+        <h3>Be Considerate of Others</h3>
+        <p>Respect other visitors and protect the quality of their experience. Be courteous, yield to other users on the trail, and keep noise levels down.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="difference-banner">
+    <h3>Make a Difference</h3>
+    <p>Every hiker has the power to protect our trails. Share these principles with fellow outdoor enthusiasts, pick up litter you find on the trail, and lead by example. Together, we can preserve the natural beauty of the Pacific Northwest for generations to come.</p>
+  </div>
+
+</div>
 
 <footer class="footer">
   <p>© The Great Outdoors</p>
 </footer>
 
 <script>
+  lucide.createIcons();
   const hamburger = document.getElementById('hamburger');
   const nav = document.getElementById('nav');
   hamburger.addEventListener('click', () => nav.classList.toggle('open'));
