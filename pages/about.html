@@ -1,59 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>About - The Great Outdoors</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - The Great Outdoors</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
 
-  <body>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="index.html">The Great Outdoors</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">The Great Outdoors</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Find Trails</a>
+      <a href="responsible.html">Responsible Recreation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
 
-        <nav class="nav">
-          <a class="nav-link" href="index.html">Find Trails</a>
-          <a class="nav-link" href="about.html">About</a>
-        </nav>
-      </div>
-    </header>
+<main class="container">
+  <h1>About Evan Holt</h1>
 
-    <main class="container section">
-      <h1 class="section-title">About Evan Holt</h1>
+  <p>
+    Evan Holt is a trail guide who loves helping people explore the outdoors.
+    This site shares trail options and encourages responsible hiking.
+  </p>
 
-      <p>
-        Evan Holt is a trail guide who loves helping people explore the outdoors.
-        This site shares trail options and encourages responsible hiking.
-      </p>
+  <p>
+    Mission: protect trails through Leave No Trace habits, planning ahead,
+    and respect for wildlife and other hikers.
+  </p>
+</main>
 
-      <p>
-        Mission: protect trails through Leave No Trace habits, planning ahead,
-        and respect for wildlife and other hikers.
-      </p>
-    </main>
+<footer class="footer">
+  <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
+</footer>
 
-    <footer class="site-footer">
-      <div class="container">
-        <p class="footer-text">© The Great Outdoors</p>
-      </div>
-    </footer>
-  </body>
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => nav.classList.remove('open'));
+  });
+</script>
+
+</body>
 </html>
-  ...
-    <script src="script.js"></script>
-
-    <!-- ADD THIS BELOW script.js -->
-    <script>
-      const hamburger = document.getElementById('hamburger');
-      const nav = document.getElementById('nav');
-      hamburger.addEventListener('click', () => nav.classList.toggle('open'));
-      nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => nav.classList.remove('open'));
-      });
-    </script>
-
-  </body>
-</html>
-
-  
