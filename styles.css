@@ -37,6 +37,11 @@ body {
   margin-left: 16px;
 }
 
+.nav a.active {
+  border-bottom: 2px solid white;
+  padding-bottom: 2px;
+}
+
 /* HERO */
 .hero {
   position: relative;
