@@ -5,6 +5,186 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - The Great Outdoors</title>
   <link rel="stylesheet" href="../styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .about-hero {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .about-hero img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 40%;
+      z-index: 0;
+    }
+
+    .about-hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
+
+    .about-hero-text {
+      position: relative;
+      z-index: 2;
+      color: white;
+      padding: 0 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .about-hero-text h1 {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      color: white;
+    }
+
+    .about-hero-text p {
+      font-size: 20px;
+      opacity: 0.9;
+      color: white;
+    }
+
+    .about-content {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 16px;
+    }
+
+    .about-intro {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .about-intro h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .about-intro p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #666;
+      max-width: 750px;
+      margin: auto;
+    }
+
+    .sections-heading {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 32px;
+      color: #222;
+    }
+
+    .about-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .about-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: box-shadow 0.2s;
+    }
+
+    .about-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-card-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(45, 80, 22, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .about-card-icon svg {
+      width: 28px;
+      height: 28px;
+      color: #2d5016;
+      stroke: #2d5016;
+    }
+
+    .about-card-body h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .about-card-body p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .about-card-body p + p {
+      margin-top: 12px;
+    }
+
+    .join-banner {
+      background: rgba(45, 80, 22, 0.05);
+      border: 2px solid rgba(45, 80, 22, 0.2);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .join-banner h3 {
+      font-size: 22px;
+      margin-bottom: 16px;
+      color: #222;
+    }
+
+    .join-banner p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+
+    @media (max-width: 768px) {
+      .about-hero { height: 50vh; }
+      .about-hero-text h1 { font-size: 30px; }
+      .about-hero-text p { font-size: 16px; }
+      .about-card { flex-direction: column; gap: 12px; }
+      .sections-heading, .about-intro h2 { font-size: 22px; }
+    }
+
+    @media (max-width: 480px) {
+      .about-hero { height: 45vh; }
+      .about-hero-text h1 { font-size: 24px; }
+      .about-hero-text p { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -29,25 +209,67 @@
   </div>
 </header>
 
-<main class="container">
-  <h1>About Evan Holt</h1>
+<section class="about-hero">
+  <img src="../images/hero-hiking.jpg" alt="Evan hiking a Pacific Northwest trail">
+  <div class="about-hero-overlay"></div>
+  <div class="about-hero-text">
+    <h1>About Evan Holt</h1>
+    <p>Lifelong PNW resident, wilderness guide, and the person behind The Great Outdoors</p>
+  </div>
+</section>
 
-  <p>
-    Evan Holt is a trail guide who loves helping people explore the outdoors.
-    This site shares trail options and encourages responsible hiking.
-  </p>
+<div class="about-content">
 
-  <p>
-    Mission: protect trails through Leave No Trace habits, planning ahead,
-    and respect for wildlife and other hikers.
-  </p>
-</main>
+  <div class="about-intro">
+    <h2>Hi, I'm Evan.</h2>
+    <p>I've spent the last 15 years on these trails — guiding hikers, teaching Leave No Trace, and falling deeper in love with the Pacific Northwest. This site is my attempt to share that love with you, and to make it easier for everyone to explore responsibly.</p>
+  </div>
+
+  <div class="about-sections">
+
+    <div class="about-card">
+      <div class="about-card-icon"><i data-lucide="user"></i></div>
+      <div class="about-card-body">
+        <h3>Who I Am</h3>
+        <p>I grew up in Bend, Oregon, spending weekends scrambling up ridgelines and wading through creeks before I even knew what a trailhead sign was. After college, I turned that lifelong obsession into a career as a wilderness guide and outdoor educator, leading groups through some of the most stunning terrain Oregon and Washington have to offer.</p>
+        <p>Over 15 years, I've guided hundreds of hikers — first-timers nervous about the dark and experienced backpackers chasing summits alike. Every single one of those trips reminded me why these places matter so deeply, and why how we use them matters just as much.</p>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-icon"><i data-lucide="lightbulb"></i></div>
+      <div class="about-card-body">
+        <h3>Why I Built This</h3>
+        <p>Out on the trail, I kept seeing the same problems repeat themselves. New hikers showing up underprepared because the information online was scattered or outdated. Popular spots getting hammered while equally beautiful, lesser-known trails sat empty. Websites more interested in selling gear than helping people hike safely.</p>
+        <p>In 2024, I founded The Great Outdoors to fix that. Not a gear shop, not a travel blog — just a straightforward, trustworthy place to find trail information and learn how to be a good steward of the land you're walking on.</p>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-icon"><i data-lucide="leaf"></i></div>
+      <div class="about-card-body">
+        <h3>My Mission</h3>
+        <p>The Pacific Northwest's trails are incredible, and they're fragile. My mission is simple: help people explore this place responsibly, so it stays incredible for the next generation of hikers too.</p>
+        <p>That means giving you accurate, up-to-date trail info. It means nudging you toward trails that could use more love. And it means weaving Leave No Trace into everything we do here — not as a lecture, but as a natural part of the way we talk about these places. Come for the hike. Stay for the community. Leave nothing but footprints.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="join-banner">
+    <h3>Ready to Explore?</h3>
+    <p>Whether you're planning your very first hike or looking for a trail you've never heard of, you're in the right place. Let's get you outside.</p>
+    <a href="trails.html" class="btn">Find a Trail</a>
+  </div>
+
+</div>
 
 <footer class="footer">
   <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
 </footer>
 
 <script>
+  lucide.createIcons();
   const hamburger = document.getElementById('hamburger');
   const nav = document.getElementById('nav');
   hamburger.addEventListener('click', () => nav.classList.toggle('open'));
