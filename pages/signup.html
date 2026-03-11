@@ -438,6 +438,17 @@
     document.getElementById(id).addEventListener('input', clearAlerts);
   });
 
+  // localStorage helpers
+  function getUsers() {
+    return JSON.parse(localStorage.getItem('goUsers') || '[]');
+  }
+
+  function saveUser(user) {
+    const users = getUsers();
+    users.push(user);
+    localStorage.setItem('goUsers', JSON.stringify(users));
+  }
+
   // Form submit
   document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -448,6 +459,7 @@
     const terms    = document.getElementById('terms').checked;
     const btn      = document.getElementById('signupBtn');
 
+    // Validation
     if (!name)    { showError('Please enter your full name.'); return; }
     if (!email)   { showError('Please enter your email address.'); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
@@ -456,15 +468,27 @@
     if (password !== confirm) { showError('Passwords do not match.'); return; }
     if (!terms) { showError('Please accept the Terms and Conditions.'); return; }
 
+    // Check if email already registered
+    const users = getUsers();
+    if (email === 'demo@greatoutdoors.com' || users.find(u => u.email === email)) {
+      showError('An account with this email already exists. Please log in.');
+      return;
+    }
+
     clearAlerts();
     btn.textContent = 'Creating account…';
     btn.disabled = true;
 
     setTimeout(() => {
-      btn.textContent = 'Create Account';
-      btn.disabled = false;
-      showSuccess('Account created! You can now log in.');
-    }, 1200);
+      // Save new user to localStorage
+      saveUser({ name, email, password });
+
+      // Auto log in after signup
+      sessionStorage.setItem('goCurrentUser', JSON.stringify({ name, email }));
+
+      showSuccess('Account created! Redirecting…');
+      setTimeout(() => { window.location.href = '../index.html'; }, 1000);
+    }, 800);
   });
 </script>
 

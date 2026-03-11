@@ -397,7 +397,7 @@
   nav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => nav.classList.remove('open')));
 
   // Password toggle
-  const pwInput  = document.getElementById('password');
+  const pwInput   = document.getElementById('password');
   const toggleBtn = document.getElementById('togglePw');
   toggleBtn.addEventListener('click', () => {
     const show = pwInput.type === 'password';
@@ -429,14 +429,23 @@
   document.getElementById('email').addEventListener('input', clearAlerts);
   document.getElementById('password').addEventListener('input', clearAlerts);
 
+  // Demo account
+  const DEMO = { email: 'demo@greatoutdoors.com', password: 'demo1234', name: 'Demo User' };
+
+  // Get registered users from localStorage
+  function getUsers() {
+    return JSON.parse(localStorage.getItem('goUsers') || '[]');
+  }
+
   // Form submit
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
+    const remember = document.getElementById('rememberMe').checked;
     const btn      = document.getElementById('loginBtn');
 
-    if (!email) { showError('Please enter your email address.'); return; }
+    if (!email)    { showError('Please enter your email address.'); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
     if (!password) { showError('Please enter your password.'); return; }
 
@@ -445,10 +454,27 @@
     btn.disabled = true;
 
     setTimeout(() => {
-      btn.textContent = 'Log In';
-      btn.disabled = false;
-      showError('Incorrect email or password. Please try again.');
-    }, 1200);
+      // Check demo account
+      const isDemo = email === DEMO.email && password === DEMO.password;
+
+      // Check registered users
+      const users = getUsers();
+      const match = users.find(u => u.email === email && u.password === password);
+
+      if (isDemo || match) {
+        const user = isDemo ? DEMO : match;
+        // Save session
+        const storage = remember ? localStorage : sessionStorage;
+        storage.setItem('goCurrentUser', JSON.stringify({ name: user.name, email: user.email }));
+
+        showSuccess('Logged in! Redirecting…');
+        setTimeout(() => { window.location.href = '../index.html'; }, 1000);
+      } else {
+        btn.textContent = 'Log In';
+        btn.disabled = false;
+        showError('Incorrect email or password. Please try again.');
+      }
+    }, 800);
   });
 </script>
 
