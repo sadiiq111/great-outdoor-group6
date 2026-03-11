@@ -20,13 +20,46 @@
       padding: 48px 16px;
     }
 
+    .auth-wrapper {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    /* Tab toggle */
+    .auth-tabs {
+      display: flex;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 16px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: none;
+      border-radius: 7px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #666;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .auth-tab.active {
+      background: #2d5016;
+      color: white;
+    }
+
+    /* Card */
     .auth-card {
       background: white;
       border: 1px solid #e5e7eb;
       border-radius: 16px;
       padding: 40px 36px;
-      width: 100%;
-      max-width: 440px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.07);
     }
 
@@ -52,7 +85,7 @@
       stroke: #2d5016;
     }
 
-    .auth-card-header h1 {
+    .auth-card-header h2 {
       font-size: 24px;
       font-weight: bold;
       color: #222;
@@ -64,7 +97,7 @@
       color: #666;
     }
 
-    /* ALERTS */
+    /* Alerts */
     .alert {
       display: none;
       align-items: center;
@@ -76,33 +109,16 @@
     }
 
     .alert.visible { display: flex; }
+    .alert svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-    .alert svg {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    .alert-error {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
-    }
-
+    .alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
     .alert-error svg { stroke: #b91c1c; }
 
-    .alert-success {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #15803d;
-    }
-
+    .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
     .alert-success svg { stroke: #15803d; }
 
-    /* FORM */
-    .form-group {
-      margin-bottom: 20px;
-    }
+    /* Form */
+    .form-group { margin-bottom: 20px; }
 
     .form-group label {
       display: block;
@@ -112,9 +128,7 @@
       margin-bottom: 6px;
     }
 
-    .input-wrap {
-      position: relative;
-    }
+    .input-wrap { position: relative; }
 
     .input-icon {
       position: absolute;
@@ -128,9 +142,7 @@
       transition: stroke 0.2s;
     }
 
-    .input-wrap:focus-within .input-icon {
-      stroke: #2d5016;
-    }
+    .input-wrap:focus-within .input-icon { stroke: #2d5016; }
 
     .form-group input[type="email"],
     .form-group input[type="password"],
@@ -213,13 +225,10 @@
     .check-label input[type="checkbox"]:checked::after {
       content: '';
       position: absolute;
-      left: 5px;
-      top: 2px;
-      width: 5px;
-      height: 9px;
+      left: 5px; top: 2px;
+      width: 5px; height: 9px;
       border: 2px solid white;
-      border-top: none;
-      border-left: none;
+      border-top: none; border-left: none;
       transform: rotate(42deg);
     }
 
@@ -232,7 +241,51 @@
 
     .forgot-link:hover { text-decoration: underline; }
 
-    /* BUTTON */
+    .terms-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #555;
+      user-select: none;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .terms-label input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+      position: relative;
+      margin-top: 2px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .terms-label input[type="checkbox"]:checked {
+      background: #2d5016;
+      border-color: #2d5016;
+    }
+
+    .terms-label input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px; top: 2px;
+      width: 5px; height: 9px;
+      border: 2px solid white;
+      border-top: none; border-left: none;
+      transform: rotate(42deg);
+    }
+
+    .terms-label a { color: #2d5016; font-weight: 500; text-decoration: none; }
+    .terms-label a:hover { text-decoration: underline; }
+
     .btn-auth {
       width: 100%;
       padding: 13px;
@@ -255,14 +308,8 @@
     }
 
     .btn-auth:active { transform: translateY(0); }
+    .btn-auth:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    .btn-auth:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* DIVIDER */
     .form-divider {
       display: flex;
       align-items: center;
@@ -280,7 +327,6 @@
       background: #e5e7eb;
     }
 
-    /* PROMPT */
     .auth-prompt {
       text-align: center;
       font-size: 14px;
@@ -291,11 +337,11 @@
       color: #2d5016;
       font-weight: 600;
       text-decoration: none;
+      cursor: pointer;
     }
 
     .auth-prompt a:hover { text-decoration: underline; }
 
-    /* RESPONSIVE */
     @media (max-width: 480px) {
       .auth-card { padding: 28px 20px; }
       .auth-page { padding: 24px 12px; align-items: flex-start; }
@@ -319,74 +365,153 @@
       <a href="trails.html">Find Trails</a>
       <a href="responsible.html">Responsible Recreation</a>
       <a href="about.html">About</a>
+      <a href="login.html" class="nav-login active">Login</a>
     </nav>
   </div>
 </header>
 
 <div class="auth-page">
-  <div class="auth-card">
+  <div class="auth-wrapper">
 
-    <div class="auth-card-header">
-      <div class="auth-card-icon">
-        <i data-lucide="log-in"></i>
-      </div>
-      <h1>Welcome Back</h1>
-      <p>Log in to your account to continue</p>
+    <!-- Tab buttons -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin">Log In</button>
+      <button class="auth-tab" id="tabSignup">Sign Up</button>
     </div>
 
-    <!-- Error alert -->
-    <div class="alert alert-error" id="errorAlert" role="alert">
-      <i data-lucide="alert-circle"></i>
-      <span id="errorText"></span>
-    </div>
+    <div class="auth-card">
 
-    <!-- Success alert -->
-    <div class="alert alert-success" id="successAlert" role="alert">
-      <i data-lucide="check-circle"></i>
-      <span id="successText"></span>
-    </div>
-
-    <form id="loginForm" novalidate>
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <div class="input-wrap">
-          <i data-lucide="mail" class="input-icon"></i>
-          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <!-- LOG IN SECTION -->
+      <div id="loginSection">
+        <div class="auth-card-header">
+          <div class="auth-card-icon"><i data-lucide="log-in"></i></div>
+          <h2>Welcome Back</h2>
+          <p>Log in to your account to continue</p>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <div class="input-wrap">
-          <i data-lucide="lock" class="input-icon"></i>
-          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
-          <button type="button" class="toggle-pw" id="togglePw" aria-label="Show password">
-            <i data-lucide="eye"></i>
-          </button>
+        <div class="alert alert-error" id="loginError" role="alert">
+          <i data-lucide="alert-circle"></i>
+          <span id="loginErrorText"></span>
         </div>
+        <div class="alert alert-success" id="loginSuccess" role="alert">
+          <i data-lucide="check-circle"></i>
+          <span id="loginSuccessText"></span>
+        </div>
+
+        <form id="loginForm" novalidate>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrap">
+              <i data-lucide="mail" class="input-icon"></i>
+              <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+              <button type="button" class="toggle-pw" id="togglePw" aria-label="Show password">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="check-label">
+              <input type="checkbox" id="rememberMe" name="rememberMe">
+              Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-auth" id="loginBtn">Log In</button>
+
+        </form>
+
+        <div class="form-divider">or</div>
+        <p class="auth-prompt">Don't have an account? <a id="goToSignup">Create one here</a></p>
       </div>
 
-      <div class="form-options">
-        <label class="check-label">
-          <input type="checkbox" id="rememberMe" name="rememberMe">
-          Remember me
-        </label>
-        <a href="#" class="forgot-link">Forgot password?</a>
+      <!-- SIGN UP SECTION -->
+      <div id="signupSection" style="display:none;">
+        <div class="auth-card-header">
+          <div class="auth-card-icon"><i data-lucide="user-plus"></i></div>
+          <h2>Create an Account</h2>
+          <p>Join The Great Outdoors community today</p>
+        </div>
+
+        <div class="alert alert-error" id="signupError" role="alert">
+          <i data-lucide="alert-circle"></i>
+          <span id="signupErrorText"></span>
+        </div>
+        <div class="alert alert-success" id="signupSuccess" role="alert">
+          <i data-lucide="check-circle"></i>
+          <span id="signupSuccessText"></span>
+        </div>
+
+        <form id="signupForm" novalidate>
+
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <div class="input-wrap">
+              <i data-lucide="user" class="input-icon"></i>
+              <input type="text" id="signupName" name="name" placeholder="Jane Smith" autocomplete="name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <div class="input-wrap">
+              <i data-lucide="mail" class="input-icon"></i>
+              <input type="email" id="signupEmail" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <div class="input-wrap">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="signupPassword" name="password" placeholder="••••••••" autocomplete="new-password" required>
+              <button type="button" class="toggle-pw" id="toggleSignupPw" aria-label="Show password">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupConfirmPassword">Confirm Password</label>
+            <div class="input-wrap">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="signupConfirmPassword" name="confirmPassword" placeholder="••••••••" autocomplete="new-password" required>
+              <button type="button" class="toggle-pw" id="toggleConfirmPw" aria-label="Show confirm password">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <label class="terms-label">
+            <input type="checkbox" id="signupTerms" name="terms" required>
+            I agree to the <a href="#terms">Terms and Conditions</a> and <a href="#privacy">Privacy Policy</a>
+          </label>
+
+          <button type="submit" class="btn-auth" id="signupBtn">Create Account</button>
+
+        </form>
+
+        <div class="form-divider">or</div>
+        <p class="auth-prompt">Already have an account? <a id="goToLogin">Log in here</a></p>
       </div>
 
-      <button type="submit" class="btn-auth" id="loginBtn">Log In</button>
-
-    </form>
-
-    <div class="form-divider">or</div>
-
-    <p class="auth-prompt">
-      Don't have an account? <a href="signup.html">Sign up here</a>
-    </p>
-
+    </div>
   </div>
 </div>
+
+<footer class="footer">
+  <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
+</footer>
 
 <script>
   lucide.createIcons();
@@ -396,9 +521,25 @@
   hamburger.addEventListener('click', () => nav.classList.toggle('open'));
   nav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => nav.classList.remove('open')));
 
-  // Password toggle
-  const pwInput   = document.getElementById('password');
+  // Tab switching
+  function showTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('loginSection').style.display = isLogin ? 'block' : 'none';
+    document.getElementById('signupSection').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('tabLogin').classList.toggle('active', isLogin);
+    document.getElementById('tabSignup').classList.toggle('active', !isLogin);
+    lucide.createIcons();
+  }
+
+  document.getElementById('tabLogin').addEventListener('click', () => showTab('login'));
+  document.getElementById('tabSignup').addEventListener('click', () => showTab('signup'));
+  document.getElementById('goToSignup').addEventListener('click', () => showTab('signup'));
+  document.getElementById('goToLogin').addEventListener('click', () => showTab('login'));
+
+  // --- LOGIN ---
+
   const toggleBtn = document.getElementById('togglePw');
+  const pwInput   = document.getElementById('password');
   toggleBtn.addEventListener('click', () => {
     const show = pwInput.type === 'password';
     pwInput.type = show ? 'text' : 'password';
@@ -406,38 +547,34 @@
     lucide.createIcons();
   });
 
-  // Alerts
-  function showError(msg) {
-    document.getElementById('errorText').textContent = msg;
-    document.getElementById('errorAlert').classList.add('visible');
-    document.getElementById('successAlert').classList.remove('visible');
+  function showLoginError(msg) {
+    document.getElementById('loginErrorText').textContent = msg;
+    document.getElementById('loginError').classList.add('visible');
+    document.getElementById('loginSuccess').classList.remove('visible');
     lucide.createIcons();
   }
 
-  function showSuccess(msg) {
-    document.getElementById('successText').textContent = msg;
-    document.getElementById('successAlert').classList.add('visible');
-    document.getElementById('errorAlert').classList.remove('visible');
+  function showLoginSuccess(msg) {
+    document.getElementById('loginSuccessText').textContent = msg;
+    document.getElementById('loginSuccess').classList.add('visible');
+    document.getElementById('loginError').classList.remove('visible');
     lucide.createIcons();
   }
 
-  function clearAlerts() {
-    document.getElementById('errorAlert').classList.remove('visible');
-    document.getElementById('successAlert').classList.remove('visible');
+  function clearLoginAlerts() {
+    document.getElementById('loginError').classList.remove('visible');
+    document.getElementById('loginSuccess').classList.remove('visible');
   }
 
-  document.getElementById('email').addEventListener('input', clearAlerts);
-  document.getElementById('password').addEventListener('input', clearAlerts);
+  document.getElementById('email').addEventListener('input', clearLoginAlerts);
+  document.getElementById('password').addEventListener('input', clearLoginAlerts);
 
-  // Demo account
   const DEMO = { email: 'demo@greatoutdoors.com', password: 'demo1234', name: 'Demo User' };
 
-  // Get registered users from localStorage
   function getUsers() {
     return JSON.parse(localStorage.getItem('goUsers') || '[]');
   }
 
-  // Form submit
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const email    = document.getElementById('email').value.trim();
@@ -445,35 +582,110 @@
     const remember = document.getElementById('rememberMe').checked;
     const btn      = document.getElementById('loginBtn');
 
-    if (!email)    { showError('Please enter your email address.'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
-    if (!password) { showError('Please enter your password.'); return; }
+    if (!email)    { showLoginError('Please enter your email address.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showLoginError('Please enter a valid email address.'); return; }
+    if (!password) { showLoginError('Please enter your password.'); return; }
 
-    clearAlerts();
+    clearLoginAlerts();
     btn.textContent = 'Logging in…';
     btn.disabled = true;
 
     setTimeout(() => {
-      // Check demo account
       const isDemo = email === DEMO.email && password === DEMO.password;
-
-      // Check registered users
-      const users = getUsers();
-      const match = users.find(u => u.email === email && u.password === password);
+      const users  = getUsers();
+      const match  = users.find(u => u.email === email && u.password === password);
 
       if (isDemo || match) {
         const user = isDemo ? DEMO : match;
-        // Save session
         const storage = remember ? localStorage : sessionStorage;
         storage.setItem('goCurrentUser', JSON.stringify({ name: user.name, email: user.email }));
-
-        showSuccess('Logged in! Redirecting…');
+        showLoginSuccess('Logged in! Redirecting…');
         setTimeout(() => { window.location.href = '../index.html'; }, 1000);
       } else {
         btn.textContent = 'Log In';
         btn.disabled = false;
-        showError('Incorrect email or password. Please try again.');
+        showLoginError('Incorrect email or password. Please try again.');
       }
+    }, 800);
+  });
+
+  // --- SIGN UP ---
+
+  const toggleSignupBtn  = document.getElementById('toggleSignupPw');
+  const signupPwInput    = document.getElementById('signupPassword');
+  const toggleConfirmBtn = document.getElementById('toggleConfirmPw');
+  const confirmPwInput   = document.getElementById('signupConfirmPassword');
+
+  toggleSignupBtn.addEventListener('click', () => {
+    const show = signupPwInput.type === 'password';
+    signupPwInput.type = show ? 'text' : 'password';
+    toggleSignupBtn.innerHTML = show ? '<i data-lucide="eye-off"></i>' : '<i data-lucide="eye"></i>';
+    lucide.createIcons();
+  });
+
+  toggleConfirmBtn.addEventListener('click', () => {
+    const show = confirmPwInput.type === 'password';
+    confirmPwInput.type = show ? 'text' : 'password';
+    toggleConfirmBtn.innerHTML = show ? '<i data-lucide="eye-off"></i>' : '<i data-lucide="eye"></i>';
+    lucide.createIcons();
+  });
+
+  function showSignupError(msg) {
+    document.getElementById('signupErrorText').textContent = msg;
+    document.getElementById('signupError').classList.add('visible');
+    document.getElementById('signupSuccess').classList.remove('visible');
+    lucide.createIcons();
+  }
+
+  function showSignupSuccess(msg) {
+    document.getElementById('signupSuccessText').textContent = msg;
+    document.getElementById('signupSuccess').classList.add('visible');
+    document.getElementById('signupError').classList.remove('visible');
+    lucide.createIcons();
+  }
+
+  function clearSignupAlerts() {
+    document.getElementById('signupError').classList.remove('visible');
+    document.getElementById('signupSuccess').classList.remove('visible');
+  }
+
+  ['signupName', 'signupEmail', 'signupPassword', 'signupConfirmPassword'].forEach(id => {
+    document.getElementById(id).addEventListener('input', clearSignupAlerts);
+  });
+
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name            = document.getElementById('signupName').value.trim();
+    const email           = document.getElementById('signupEmail').value.trim();
+    const password        = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+    const terms           = document.getElementById('signupTerms').checked;
+    const btn             = document.getElementById('signupBtn');
+
+    if (!name)    { showSignupError('Please enter your full name.'); return; }
+    if (!email)   { showSignupError('Please enter your email address.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showSignupError("That email address doesn't look right."); return; }
+    if (!password) { showSignupError('Please enter a password.'); return; }
+    if (password.length < 8) { showSignupError('Password must be at least 8 characters long.'); return; }
+    if (password !== confirmPassword) { showSignupError('Passwords do not match. Please try again.'); return; }
+    if (!terms)   { showSignupError('Please accept the Terms and Conditions to continue.'); return; }
+
+    const users = getUsers();
+    if (users.find(u => u.email === email)) {
+      showSignupError('An account with that email already exists. Try logging in.');
+      return;
+    }
+
+    clearSignupAlerts();
+    btn.textContent = 'Creating account…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      users.push({ name, email, password });
+      localStorage.setItem('goUsers', JSON.stringify(users));
+      sessionStorage.setItem('goCurrentUser', JSON.stringify({ name, email }));
+      showSignupSuccess('Account created! Redirecting…');
+      setTimeout(() => { window.location.href = '../index.html'; }, 1000);
     }, 800);
   });
 </script>

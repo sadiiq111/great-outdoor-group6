@@ -42,6 +42,20 @@ body {
   padding-bottom: 2px;
 }
 
+.nav a.nav-login {
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 5px 16px;
+  margin-left: 8px;
+}
+
+.nav a.nav-login:hover,
+.nav a.nav-login.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: white;
+  border-bottom: none;
+}
+
 /* HERO */
 .hero {
   position: relative;
