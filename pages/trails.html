@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse and filter 8 Pacific Northwest hiking trails by difficulty, distance, and location. Find your perfect trail in Washington State.">
+  <title>Find Trails - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .nav-donate { background: rgba(255,255,255,0.18); color: white !important; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); transition: background 0.2s; }
+    .nav-donate:hover { background: rgba(255,255,255,0.3) !important; }
+
+    /* ── STATS BAR ── */
+    .trails-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-box {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      color: #111;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    /* ── TOOLBAR ── */
+    .trails-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .btn-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #2d5016;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-filters:hover { background: #3a6b1e; }
+    .btn-filters svg { width: 16px; height: 16px; stroke: white; fill: none; stroke-width: 2; }
+    .toolbar-search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1.5px solid #ddd;
+      border-radius: 24px;
+      overflow: hidden;
+      max-width: 420px;
+      transition: border-color 0.2s;
+    }
+    .toolbar-search:focus-within { border-color: #2d5016; }
+    .toolbar-search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 9px 16px;
+      font-size: 14px;
+      color: #333;
+      background: transparent;
+    }
+    .toolbar-search button {
+      background: none;
+      border: none;
+      padding: 9px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .toolbar-search button svg { width: 17px; height: 17px; stroke: #888; fill: none; stroke-width: 2; }
+    .toolbar-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .sort-select {
+      border: 2px solid #2d5016;
+      border-radius: 8px;
+      padding: 9px 32px 9px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #222;
+      background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center / 16px;
+      appearance: none;
+      cursor: pointer;
+    }
+    .view-toggle { display: flex; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+    .view-btn {
+      background: white;
+      border: none;
+      padding: 9px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #666;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s, color 0.15s;
+    }
+    .view-btn.active { background: #2d5016; color: white; }
+    .view-btn:not(.active):hover { background: #f3f4f6; }
+
+    /* ── FILTER PANEL ── */
+    .filter-panel {
+      display: none;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      gap: 20px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .filter-panel.open { display: flex; }
+    .filter-group { display: flex; flex-direction: column; gap: 6px; min-width: 160px; }
+    .filter-group label { font-size: 13px; font-weight: 600; color: #444; }
+    .filter-group select {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 8px 30px 8px 12px;
+      font-size: 14px;
+      color: #333;
+      background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 8px center / 14px;
+      appearance: none;
+      cursor: pointer;
+    }
+    .filter-checkbox-group { display: flex; align-items: center; gap: 8px; padding-bottom: 4px; }
+    .filter-checkbox-group input[type=checkbox] { width: 16px; height: 16px; accent-color: #2d5016; cursor: pointer; }
+    .filter-checkbox-group label { font-size: 14px; color: #333; cursor: pointer; font-weight: 500; }
+
+    /* ── TRAIL CARDS ── */
+    .trail-card { position: relative; }
+    .card-save-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.15s;
+    }
+    .card-save-btn:hover { transform: scale(1.12); }
+    .card-save-btn svg { width: 18px; height: 18px; stroke: #bbb; fill: none; stroke-width: 2; transition: stroke 0.15s, fill 0.15s; }
+    .card-save-btn.saved svg { stroke: #e53e3e; fill: #e53e3e; }
+    .card-rating { display: flex; align-items: center; gap: 5px; margin: 4px 0 8px; font-size: 14px; color: #555; }
+    .card-rating svg { width: 15px; height: 15px; fill: #f59e0b; }
+
+    /* List view */
+    .trail-cards.list-view {
+      grid-template-columns: 1fr;
+    }
+    .trail-cards.list-view .trail-card {
+      display: flex;
+      align-items: stretch;
+    }
+    .trail-cards.list-view .trail-card > a:first-of-type {
+      flex-shrink: 0;
+      width: 220px;
+    }
+    .trail-cards.list-view .trail-card img {
+      width: 220px;
+      height: 100%;
+      min-height: 160px;
+    }
+    .trail-cards.list-view .card-save-btn {
+      top: 10px; left: 10px;
+    }
+
+    .no-results { text-align: center; padding: 40px; color: #666; font-size: 16px; grid-column: 1 / -1; }
+    /* ── SKELETON LOADER ── */
+    @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+    .skeleton { background: linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%); background-size: 400px 100%; animation: shimmer 1.4s infinite; border-radius: 6px; }
+    .skeleton-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .skeleton-img { height: 250px; border-radius: 0; }
+    .skeleton-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .skeleton-line { height: 14px; }
+    .skeleton-line.wide { width: 80%; }
+    .skeleton-line.medium { width: 55%; }
+    .skeleton-line.short { width: 35%; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .trails-stats { grid-template-columns: repeat(2, 1fr); }
+      .trails-toolbar { flex-wrap: wrap; }
+      .toolbar-right { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .trails-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="news.html">News</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="main-content">
+
+  <!-- STATS BAR -->
+  <div class="trails-stats">
+    <div class="stat-box">
+      <div class="stat-number" id="stat-total">8</div>
+      <div class="stat-label">Trails Found</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number" id="stat-easy">3</div>
+      <div class="stat-label">Easy Trails</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number" id="stat-gems">2</div>
+      <div class="stat-label">Hidden Gems</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">40.6</div>
+      <div class="stat-label">Total Miles</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="trails-toolbar">
+    <button class="btn-filters" id="btn-filters" onclick="toggleFilterPanel()">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+      </svg>
+      Filters
+    </button>
+    <div class="toolbar-search">
+      <input type="text" id="search-input" placeholder="Search trails..." oninput="applyFilters()">
+      <button onclick="applyFilters()" aria-label="Search">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+    <div class="toolbar-right">
+      <select class="sort-select" id="sort-select" onchange="applyFilters()">
+        <option value="az">Sort: A-Z</option>
+        <option value="distance">Sort: Distance</option>
+        <option value="difficulty">Sort: Difficulty</option>
+        <option value="popular">Sort: Most Popular</option>
+      </select>
+      <div class="view-toggle">
+        <button class="view-btn active" id="btn-grid" onclick="setView('grid')">Grid</button>
+        <button class="view-btn" id="btn-list" onclick="setView('list')">List</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER PANEL -->
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-group">
+      <label for="filter-difficulty">Difficulty</label>
+      <select id="filter-difficulty" onchange="applyFilters()">
+        <option value="">All Levels</option>
+        <option value="easy">Easy</option>
+        <option value="moderate">Moderate</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filter-distance">Distance</label>
+      <select id="filter-distance" onchange="applyFilters()">
+        <option value="">Any Distance</option>
+        <option value="short">Under 3 miles</option>
+        <option value="medium">3–6 miles</option>
+        <option value="long">Over 6 miles</option>
+      </select>
+    </div>
+    <div class="filter-checkbox-group">
+      <input type="checkbox" id="filter-gems" onchange="applyFilters()">
+      <label for="filter-gems">Hidden Gems Only</label>
+    </div>
+  </div>
+
+  <!-- SKELETON LOADER -->
+  <div id="skeleton-grid" class="trail-cards">
+    <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line wide"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line wide"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line wide"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line wide"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line short"></div></div></div>
+  </div>
+
+  <!-- TRAIL CARDS -->
+  <div class="trail-cards" id="trail-cards" style="display:none;">
+
+    <div class="trail-card" data-hidden="false" data-difficulty="moderate" data-name="rattlesnake ledge" data-location="north bend" data-distance="4.0" data-rating="4.8">
+      <button class="card-save-btn" onclick="toggleFav('rattlesnake',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <a href="trail-detail.html?trail=rattlesnake">
+        <img src="../images/trail-1.jpg" alt="Rattlesnake Ledge">
+      </a>
+      <div class="trail-info">
+        <h3>Rattlesnake Ledge</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>North Bend, WA</p>
+        <span class="difficulty moderate">Moderate</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.8</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>4.0 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2-3 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="false" data-difficulty="moderate" data-name="wallace falls" data-location="gold bar" data-distance="5.6" data-rating="4.9">
+      <button class="card-save-btn" onclick="toggleFav('wallace',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <a href="trail-detail.html?trail=wallace">
+        <img src="../images/trail-2.jpg" alt="Wallace Falls">
+      </a>
+      <div class="trail-info">
+        <h3>Wallace Falls</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gold Bar, WA</p>
+        <span class="difficulty moderate">Moderate</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.9</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>5.6 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3-4 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="false" data-difficulty="hard" data-name="lake serene" data-location="index" data-distance="7.2" data-rating="4.7">
+      <button class="card-save-btn" onclick="toggleFav('lakeserene',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <a href="trail-detail.html?trail=lakeserene">
+        <img src="../images/trail-3.jpg" alt="Lake Serene">
+      </a>
+      <div class="trail-info">
+        <h3>Lake Serene</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Index, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.7</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>7.2 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4-5 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="true" data-difficulty="easy" data-name="ebey's landing" data-location="whidbey island" data-distance="5.6" data-rating="4.8">
+      <button class="card-save-btn" onclick="toggleFav('ebeys',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <span class="badge">
+        <svg viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" width="13" height="13"><path d="M12 2l1.5 4.5H18l-3.75 2.75L15.75 14 12 11.25 8.25 14l1.5-4.75L6 6.5h4.5L12 2z"/></svg>
+        Hidden Gem
+      </span>
+      <a href="trail-detail.html?trail=ebeys">
+        <img src="../images/trail-4.jpg" alt="Ebey's Landing">
+      </a>
+      <div class="trail-info">
+        <h3>Ebey's Landing</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Whidbey Island, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.8</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>5.6 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2-3 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="false" data-difficulty="hard" data-name="snow lake" data-location="snoqualmie pass" data-distance="7.2" data-rating="4.6">
+      <button class="card-save-btn" onclick="toggleFav('snowlake',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <a href="trail-detail.html?trail=snowlake">
+        <img src="../images/trail-5.jpg" alt="Snow Lake">
+      </a>
+      <div class="trail-info">
+        <h3>Snow Lake</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Snoqualmie Pass, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.6</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>7.2 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4-5 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="false" data-difficulty="easy" data-name="twin falls" data-location="north bend" data-distance="2.6" data-rating="4.9">
+      <button class="card-save-btn" onclick="toggleFav('twinfalls',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <a href="trail-detail.html?trail=twinfalls">
+        <img src="../images/trail-6.jpg" alt="Twin Falls">
+      </a>
+      <div class="trail-info">
+        <h3>Twin Falls</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>North Bend, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.9</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>2.6 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1-2 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="true" data-difficulty="hard" data-name="oyster dome" data-location="blanchard mountain" data-distance="6.4" data-rating="4.7">
+      <button class="card-save-btn" onclick="toggleFav('oysterdome',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <span class="badge">
+        <svg viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" width="13" height="13"><path d="M12 2l1.5 4.5H18l-3.75 2.75L15.75 14 12 11.25 8.25 14l1.5-4.75L6 6.5h4.5L12 2z"/></svg>
+        Hidden Gem
+      </span>
+      <a href="trail-detail.html?trail=oysterdome">
+        <img src="../images/trail-7.jpg" alt="Oyster Dome">
+      </a>
+      <div class="trail-info">
+        <h3>Oyster Dome</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Blanchard Mountain, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.7</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>6.4 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3-4 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-card" data-hidden="false" data-difficulty="easy" data-name="franklin falls" data-location="snoqualmie pass" data-distance="2.0" data-rating="4.8">
+      <button class="card-save-btn" onclick="toggleFav('franklinfalls',this)" aria-label="Save trail">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <a href="trail-detail.html?trail=franklinfalls">
+        <img src="../images/trail-8.jpg" alt="Franklin Falls">
+      </a>
+      <div class="trail-info">
+        <h3>Franklin Falls</h3>
+        <p class="location"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Snoqualmie Pass, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="card-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> 4.8</div>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>2.0 miles</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1-2 hours</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="trails.html">Find Trails</a></li>
+        <li><a href="responsible.html">Hike Responsibly</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://www.wta.org" target="_blank">WTA</a></li>
+        <li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Great Outdoors. All rights reserved.</p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  // ── SKELETON LOADER ──
+  document.getElementById('skeleton-grid').style.display = 'grid';
+  document.getElementById('trail-cards').style.display = 'none';
+  setTimeout(function() {
+    document.getElementById('skeleton-grid').style.display = 'none';
+    document.getElementById('trail-cards').style.display = 'grid';
+  }, 700);
+
+  // ── FAVOURITES ──
+  function toggleFav(key, btn) {
+    const saved = JSON.parse(localStorage.getItem('savedTrails') || '[]');
+    const idx = saved.indexOf(key);
+    if (idx === -1) { saved.push(key); btn.classList.add('saved'); }
+    else { saved.splice(idx, 1); btn.classList.remove('saved'); }
+    localStorage.setItem('savedTrails', JSON.stringify(saved));
+  }
+  (function() {
+    const saved = JSON.parse(localStorage.getItem('savedTrails') || '[]');
+    document.querySelectorAll('.card-save-btn').forEach(btn => {
+      const key = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+      if (saved.includes(key)) btn.classList.add('saved');
+    });
+  })();
+
+  // ── FILTER PANEL TOGGLE ──
+  function toggleFilterPanel() {
+    document.getElementById('filter-panel').classList.toggle('open');
+  }
+
+  // ── VIEW TOGGLE ──
+  function setView(mode) {
+    const grid = document.getElementById('trail-cards');
+    const btnGrid = document.getElementById('btn-grid');
+    const btnList = document.getElementById('btn-list');
+    if (mode === 'list') {
+      grid.classList.add('list-view');
+      btnList.classList.add('active');
+      btnGrid.classList.remove('active');
+    } else {
+      grid.classList.remove('list-view');
+      btnGrid.classList.add('active');
+      btnList.classList.remove('active');
+    }
+  }
+
+  // ── FILTER + SORT ──
+  function applyFilters() {
+    const query = (document.getElementById('search-input').value || '').trim().toLowerCase();
+    const difficulty = document.getElementById('filter-difficulty').value;
+    const distance = document.getElementById('filter-distance').value;
+    const gemsOnly = document.getElementById('filter-gems').checked;
+    const sort = document.getElementById('sort-select').value;
+
+    const container = document.getElementById('trail-cards');
+    const cards = Array.from(container.querySelectorAll('.trail-card'));
+
+    // Filter
+    let visible = cards.filter(card => {
+      const d = card.dataset.difficulty;
+      const dist = parseFloat(card.dataset.distance);
+      const isHidden = card.dataset.hidden === 'true';
+      const name = card.dataset.name || '';
+      const location = card.dataset.location || '';
+
+      if (query && !name.includes(query) && !location.includes(query)) return false;
+      if (difficulty && d !== difficulty) return false;
+      if (distance === 'short' && dist >= 3) return false;
+      if (distance === 'medium' && (dist < 3 || dist > 6)) return false;
+      if (distance === 'long' && dist <= 6) return false;
+      if (gemsOnly && !isHidden) return false;
+      return true;
+    });
+
+    // Sort
+    const diffOrder = { easy: 1, moderate: 2, hard: 3 };
+    visible.sort((a, b) => {
+      if (sort === 'az') return a.dataset.name.localeCompare(b.dataset.name);
+      if (sort === 'distance') return parseFloat(a.dataset.distance) - parseFloat(b.dataset.distance);
+      if (sort === 'difficulty') return diffOrder[a.dataset.difficulty] - diffOrder[b.dataset.difficulty];
+      if (sort === 'popular') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+      return 0;
+    });
+
+    // Hide all, then re-append visible in order
+    cards.forEach(c => { c.style.display = 'none'; });
+    visible.forEach(c => { c.style.display = ''; container.appendChild(c); });
+
+    // Update stat
+    document.getElementById('stat-total').textContent = visible.length;
+
+    // No results message
+    const existing = container.querySelector('.no-results');
+    if (existing) existing.remove();
+    if (visible.length === 0) {
+      const msg = document.createElement('p');
+      msg.className = 'no-results';
+      msg.textContent = 'No trails match your filters.';
+      container.appendChild(msg);
+    }
+  }
+
+  // Check for search query from home page
+  const params = new URLSearchParams(window.location.search);
+  const searchQuery = params.get('search');
+  if (searchQuery) {
+    const diffSel = document.getElementById('filter-difficulty');
+    if (['easy','moderate','hard'].includes(searchQuery.toLowerCase())) {
+      diffSel.value = searchQuery.toLowerCase();
+      document.getElementById('filter-panel').classList.add('open');
+      applyFilters();
+    }
+  }
+
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+<script src="../cookie-banner.js"></script>
+</body>
+</html>

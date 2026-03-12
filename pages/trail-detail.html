@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Detailed trail guide including distance, elevation, safety tips, seasonal info, and Leave No Trace guidance for Pacific Northwest hikes.">
+  <title>Trail Detail - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+
+    /* HERO OVERLAYS */
+    .trail-hero-actions {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+    .hero-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .hero-action-btn:hover { background: white; }
+    .hero-action-btn svg { width: 18px; height: 18px; stroke: #333; }
+    .hero-action-btn.saved svg { stroke: #e53e3e; fill: #e53e3e; }
+
+    /* STATS BAR */
+    .stat { display: flex; flex-direction: row; align-items: flex-start; gap: 12px; }
+    .stat-icon svg { width: 24px; height: 24px; stroke: #2d5016; flex-shrink: 0; margin-top: 2px; }
+
+    /* TABS */
+    .trail-tabs {
+      border-bottom: 2px solid #e5e7eb;
+      display: flex;
+      gap: 0;
+      margin: 32px 0 0;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .tab-btn:hover { color: #2d5016; }
+    .tab-btn.active { color: #2d5016; border-bottom-color: #2d5016; }
+
+    .tab-panel { display: none; padding: 32px 0; }
+    .tab-panel.active { display: block; }
+
+    /* SAFETY / SEASONAL / LNT CARDS */
+    .safety-notes, .seasonal-info, .leave-no-trace {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 20px 24px; border-radius: 8px; margin-bottom: 24px;
+    }
+    .safety-notes svg, .seasonal-info svg, .leave-no-trace svg {
+      width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px;
+    }
+    .safety-notes svg { stroke: #e67e00; }
+    .seasonal-info svg { stroke: #1565c0; }
+    .leave-no-trace svg { stroke: #2e7d32; }
+    .card-text h3 { font-size: 16px; font-weight: bold; margin-bottom: 6px; }
+    .safety-notes .card-text h3 { color: #e67e00; }
+    .seasonal-info .card-text h3 { color: #1565c0; }
+    .leave-no-trace .card-text h3 { color: #2e7d32; }
+    .card-text p { color: #555; font-size: 15px; line-height: 1.6; margin: 0; }
+
+    /* ACTION BAR */
+    .trail-action-bar { display: flex; gap: 12px; margin: 24px 0; flex-wrap: wrap; }
+    .trail-action-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px; border: 1.5px solid #d1d5db;
+      background: white; color: #333; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
+    }
+    .trail-action-btn:hover { border-color: #2d5016; color: #2d5016; background: #f0f7ea; }
+    .trail-action-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* PHOTO TAB */
+    .photo-tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .photo-tab-header h2 { font-size: 22px; color: #222; }
+    .btn-upload-photo {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #2d5016; color: white; border: none;
+      padding: 10px 20px; border-radius: 8px; font-size: 14px;
+      font-weight: bold; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-upload-photo:hover { background: #3d6a20; }
+    .btn-upload-photo svg { width: 17px; height: 17px; stroke: white; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .photo-grid-item {
+      aspect-ratio: 4/3;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f3f4f6;
+    }
+    .photo-grid-item img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 24px;
+      color: #999;
+      font-size: 15px;
+    }
+    .photo-empty svg { width: 48px; height: 48px; stroke: #ccc; margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto; }
+
+    /* REVIEWS TAB */
+    .reviews-summary {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 24px;
+      background: #f9fafb;
+      border-radius: 12px;
+      margin-bottom: 28px;
+    }
+    .reviews-big-score { text-align: center; }
+    .reviews-big-score .score { font-size: 52px; font-weight: bold; color: #222; line-height: 1; }
+    .reviews-big-score .score-stars { display: flex; gap: 3px; justify-content: center; margin: 6px 0 4px; }
+    .reviews-big-score .score-stars svg { width: 20px; height: 20px; }
+    .reviews-big-score .score-count { font-size: 13px; color: #888; }
+    .reviews-right { flex: 1; display: flex; justify-content: flex-end; }
+    .btn-write-review {
+      background: #2d5016; color: white; border: none;
+      padding: 12px 24px; border-radius: 8px; font-size: 15px;
+      font-weight: bold; cursor: pointer;
+    }
+    .review-item {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 20px 0;
+    }
+    .review-item:last-child { border-bottom: none; }
+    .review-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .review-author { font-weight: bold; color: #222; font-size: 15px; }
+    .review-date { font-size: 13px; color: #999; }
+    .review-stars { display: flex; gap: 2px; margin-bottom: 10px; }
+    .review-stars svg { width: 16px; height: 16px; }
+    .review-text { color: #555; font-size: 15px; line-height: 1.7; margin-bottom: 12px; }
+    .review-actions { display: flex; gap: 16px; }
+    .review-action-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: none; border: none; color: #666; font-size: 13px;
+      cursor: pointer; padding: 0;
+    }
+    .review-action-btn svg { width: 15px; height: 15px; stroke: #666; }
+    .review-action-btn:hover { color: #2d5016; }
+
+    /* WRITE REVIEW FORM */
+    .write-review-form {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    .write-review-form h3 { font-size: 18px; color: #222; margin-bottom: 20px; }
+    .wrf-field { margin-bottom: 16px; }
+    .wrf-field label { display: block; font-size: 13px; font-weight: bold; color: #333; margin-bottom: 6px; }
+    .wrf-field input, .wrf-field textarea {
+      width: 100%; border: 1.5px solid #e5e7eb; border-radius: 8px;
+      padding: 10px 14px; font-size: 14px; color: #333; outline: none;
+      box-sizing: border-box; font-family: inherit; background: white;
+    }
+    .wrf-field input:focus, .wrf-field textarea:focus { border-color: #2d5016; }
+    .wrf-field textarea { min-height: 90px; resize: vertical; }
+    .wrf-stars { display: flex; gap: 5px; margin-top: 4px; }
+    .wrf-star { font-size: 28px; cursor: pointer; color: #ddd; transition: color 0.1s; user-select: none; }
+    .wrf-star.lit { color: #f59e0b; }
+    .btn-post-review {
+      background: #2d5016; color: white; border: none;
+      padding: 12px 28px; border-radius: 8px; font-size: 15px;
+      font-weight: bold; cursor: pointer; width: 100%;
+    }
+    .btn-post-review:hover { background: #3d6a20; }
+
+    /* LOCATION / MAP SECTION */
+    .location-section { margin-bottom: 28px; }
+    .location-section h3 { display: flex; align-items: center; gap: 8px; font-size: 18px; color: #222; margin-bottom: 8px; }
+    .location-section h3 svg { width: 18px; height: 18px; stroke: #2d5016; }
+    .location-section .location-name { color: #555; font-size: 15px; margin-bottom: 12px; }
+    .trail-map-iframe {
+      width: 100%; height: 220px; border-radius: 12px;
+      border: 1.5px solid #e5e7eb; margin-bottom: 12px;
+      display: block;
+    }
+    .btn-get-directions {
+      display: block; width: 100%; background: #2d5016; color: white;
+      border: none; padding: 15px; border-radius: 10px;
+      font-size: 16px; font-weight: bold; cursor: pointer;
+      text-align: center; text-decoration: none;
+    }
+    .btn-get-directions:hover { background: #3d6a20; }
+
+    /* OVERVIEW WEATHER FORECAST */
+    .overview-forecast { margin-top: 32px; margin-bottom: 32px; }
+    .overview-forecast h3 { display: flex; align-items: center; gap: 8px; font-size: 18px; color: #222; margin-bottom: 16px; }
+    .overview-forecast h3 svg { width: 18px; height: 18px; stroke: #2d5016; }
+    .overview-forecast-days { border: 1.5px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: white; }
+    .overview-forecast-day {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; border-bottom: 1px solid #f3f4f6;
+    }
+    .overview-forecast-day:last-child { border-bottom: none; }
+    .ofd-icon { font-size: 22px; width: 32px; }
+    .ofd-left { display: flex; align-items: center; gap: 12px; }
+    .ofd-day { font-weight: 600; color: #333; font-size: 15px; }
+    .ofd-desc { font-size: 13px; color: #888; }
+    .ofd-temp { font-weight: bold; color: #222; font-size: 15px; }
+
+    /* ACHIEVEMENTS */
+    .achievements-section { margin-top: 32px; }
+    .achievements-section h3 { display: flex; align-items: center; gap: 8px; font-size: 18px; color: #222; margin-bottom: 16px; }
+    .achievements-section h3 svg { width: 18px; height: 18px; stroke: #2d5016; }
+    .achievement-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px; border-radius: 10px; margin-bottom: 10px;
+    }
+    .achievement-item.locked { background: #f9fafb; border: 1.5px solid #e5e7eb; }
+    .achievement-item.gold { background: #fffbeb; border: 1.5px solid #fde68a; }
+    .achievement-icon { font-size: 28px; flex-shrink: 0; }
+    .achievement-name { font-weight: bold; font-size: 15px; color: #222; margin-bottom: 3px; }
+    .achievement-desc { font-size: 13px; color: #888; }
+
+    /* CONDITIONS TAB */
+    .conditions-status {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px; border-radius: 10px;
+      background: #f0fdf4; border: 1.5px solid #bbf7d0;
+      margin-bottom: 24px;
+    }
+    .conditions-status svg { width: 22px; height: 22px; stroke: #16a34a; }
+    .conditions-status-text strong { display: block; color: #15803d; font-size: 15px; }
+    .conditions-status-text span { color: #888; font-size: 13px; }
+    .conditions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    .conditions-card {
+      background: #f9fafb; border-radius: 10px; padding: 20px;
+      text-align: center;
+    }
+    .conditions-card .cond-icon { font-size: 32px; margin-bottom: 8px; }
+    .conditions-card .cond-val { font-size: 28px; font-weight: bold; color: #222; }
+    .conditions-card .cond-label { font-size: 13px; color: #888; margin-top: 4px; }
+
+    /* MULTI-DAY FORECAST */
+    .forecast-section h3 { font-size: 18px; color: #222; margin-bottom: 16px; }
+    .forecast-days { display: flex; flex-direction: column; gap: 0; border: 1.5px solid #e5e7eb; border-radius: 10px; overflow: hidden; }
+    .forecast-day {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; background: white; border-bottom: 1px solid #e5e7eb;
+    }
+    .forecast-day:last-child { border-bottom: none; }
+    .forecast-day-name { font-weight: 600; color: #333; width: 80px; font-size: 15px; }
+    .forecast-day-icon { font-size: 22px; }
+    .forecast-day-desc { flex: 1; color: #666; font-size: 14px; padding: 0 12px; }
+    .forecast-day-temp { font-weight: bold; color: #222; font-size: 15px; }
+
+    /* RECENT REPORTS */
+    .reports-section { margin-top: 28px; }
+    .reports-section h3 { font-size: 18px; color: #222; margin-bottom: 16px; }
+    .report-item { border-bottom: 1px solid #e5e7eb; padding: 14px 0; }
+    .report-item:last-child { border-bottom: none; }
+    .report-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .report-author { font-weight: bold; font-size: 14px; color: #333; }
+    .report-date { font-size: 13px; color: #999; }
+    .report-text { font-size: 14px; color: #555; line-height: 1.6; }
+
+    /* SIMILAR TRAILS */
+    /* ── BREADCRUMB ── */
+    .breadcrumb { padding: 14px 0 0; }
+    .breadcrumb ol { display: flex; align-items: center; gap: 6px; list-style: none; padding: 0; margin: 0; flex-wrap: wrap; }
+    .breadcrumb li { font-size: 13px; color: #888; }
+    .breadcrumb li + li::before { content: "›"; margin-right: 6px; color: #bbb; }
+    .breadcrumb a { color: #2d5016; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb li[aria-current] { color: #333; font-weight: 500; }
+    /* ── TRAIL ALERT ── */
+    .trail-alert { display: flex; align-items: center; gap: 10px; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 10px; padding: 12px 16px; margin: 14px 0 4px; color: #92400e; font-size: 14px; }
+    .trail-alert svg { flex-shrink: 0; }
+    .trail-alert span { flex: 1; }
+    .alert-close { background: none; border: none; cursor: pointer; font-size: 16px; color: #92400e; padding: 0 4px; line-height: 1; }
+    .similar-trails {
+      margin-top: 32px; background: #fff; border-radius: 16px;
+      padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .similar-trails h2 { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 16px; }
+    .similar-trails-cards { display: flex; flex-direction: column; gap: 12px; }
+    .similar-trail-item {
+      display: block; background: #f3f4f6; border-radius: 10px;
+      padding: 16px 20px; text-decoration: none; transition: background 0.15s;
+    }
+    .similar-trail-item:hover { background: #e9eaec; }
+    .similar-trail-name { font-weight: 700; color: #111; font-size: 16px; margin-bottom: 4px; }
+    .similar-trail-meta { font-size: 13px; color: #666; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .trail-hero-actions { flex-direction: column; gap: 6px; }
+      .hero-action-btn { font-size: 13px; padding: 8px 12px; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-summary { flex-direction: column; gap: 16px; }
+      .reviews-right { width: 100%; }
+      .btn-write-review { width: 100%; }
+      .conditions-grid { grid-template-columns: 1fr; }
+      .tab-btn { padding: 12px 16px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="news.html">News</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="#" class="btn-login">Login</a>
+      <a href="#" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<section class="trail-hero">
+  <img id="trail-image" src="" alt="" class="trail-hero-img">
+  <div class="trail-hero-text">
+    <a href="trails.html" class="back-link">← Back to Trails</a>
+    <h1 id="trail-name"></h1>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span id="trail-difficulty" class="difficulty"></span>
+      <span id="trail-rating-hero" style="color:white;font-size:15px;font-weight:600;"></span>
+    </div>
+  </div>
+  <div class="trail-hero-actions">
+    <button class="hero-action-btn" id="save-btn" onclick="toggleSave()">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Save
+    </button>
+    <button class="hero-action-btn" id="share-btn" onclick="shareTrail()">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Share
+    </button>
+    <button class="hero-action-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print
+    </button>
+  </div>
+</section>
+
+<main class="container" id="main-content">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="trails.html">Trails</a></li>
+      <li id="breadcrumb-trail-name" aria-current="page">Trail</li>
+    </ol>
+  </nav>
+
+  <!-- TRAIL ALERT -->
+  <div class="trail-alert" id="trail-alert">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+    <span id="alert-text">Checking trail conditions...</span>
+    <button class="alert-close" onclick="document.getElementById('trail-alert').style.display='none'" aria-label="Dismiss">✕</button>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="trail-stats-bar">
+    <div class="stat">
+      <i data-lucide="mountain"></i>
+      <div class="stat-text">
+        <p class="stat-label">Distance</p>
+        <p class="stat-value" id="trail-distance"></p>
+      </div>
+    </div>
+    <div class="stat">
+      <i data-lucide="clock"></i>
+      <div class="stat-text">
+        <p class="stat-label">Duration</p>
+        <p class="stat-value" id="trail-time"></p>
+      </div>
+    </div>
+    <div class="stat">
+      <i data-lucide="trending-up"></i>
+      <div class="stat-text">
+        <p class="stat-label">Elevation Gain</p>
+        <p class="stat-value" id="trail-elevation"></p>
+      </div>
+    </div>
+    <div class="stat">
+      <i data-lucide="thumbs-up"></i>
+      <div class="stat-text">
+        <p class="stat-label">Recommend</p>
+        <p class="stat-value" id="trail-recommend"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIRECTIONS BAR -->
+  <div class="trail-action-bar">
+    <a class="trail-action-btn" id="directions-btn" href="#" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Get Directions
+    </a>
+  </div>
+
+  <!-- TABS -->
+  <nav class="trail-tabs" aria-label="Trail sections">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">Overview</button>
+    <button class="tab-btn" onclick="switchTab('photos', this)">Photos</button>
+    <button class="tab-btn" onclick="switchTab('reviews', this)">Reviews</button>
+    <button class="tab-btn" onclick="switchTab('conditions', this)">Conditions</button>
+  </nav>
+
+  <!-- ── OVERVIEW TAB ── -->
+  <div class="tab-panel active" id="tab-overview">
+    <div class="trail-about">
+      <h2>About This Trail</h2>
+      <p id="trail-about"></p>
+    </div>
+
+    <div class="safety-notes">
+      <i data-lucide="triangle-alert"></i>
+      <div class="card-text">
+        <h3>Safety Notes</h3>
+        <p id="trail-safety"></p>
+      </div>
+    </div>
+
+    <div class="seasonal-info">
+      <i data-lucide="info"></i>
+      <div class="card-text">
+        <h3>Seasonal Information</h3>
+        <p id="trail-seasonal"></p>
+      </div>
+    </div>
+
+    <div class="leave-no-trace">
+      <i data-lucide="leaf"></i>
+      <div class="card-text">
+        <h3>Leave No Trace</h3>
+        <p>Please practice Leave No Trace principles: pack out all trash, stay on designated trails, respect wildlife, and leave what you find. Help us preserve these beautiful places for future generations.</p>
+      </div>
+    </div>
+
+    <!-- LOCATION -->
+    <div class="location-section">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Location
+      </h3>
+      <p class="location-name" id="location-name-text"></p>
+      <iframe id="trail-map" class="trail-map-iframe" loading="lazy" allowfullscreen title="Trail map"></iframe>
+      <a class="btn-get-directions" id="directions-link" href="#" target="_blank">Get Directions</a>
+    </div>
+
+    <!-- WEATHER FORECAST (OVERVIEW) -->
+    <div class="overview-forecast">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+        Weather Forecast
+      </h3>
+      <div class="overview-forecast-days" id="overview-forecast-days">
+        <div class="overview-forecast-day"><span class="ofd-day" style="color:#aaa">Loading...</span></div>
+      </div>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="achievements-section">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        Achievements
+      </h3>
+      <div class="achievement-item gold">
+        <div class="achievement-icon">🏆</div>
+        <div>
+          <div class="achievement-name">Peak Bagger</div>
+          <div class="achievement-desc">Complete this trail to earn</div>
+        </div>
+      </div>
+      <div class="achievement-item locked">
+        <div class="achievement-icon">📸</div>
+        <div>
+          <div class="achievement-name">Photo Hunter</div>
+          <div class="achievement-desc">Share 5 photos to unlock</div>
+        </div>
+      </div>
+      <div class="achievement-item locked">
+        <div class="achievement-icon">⭐</div>
+        <div>
+          <div class="achievement-name">Trail Reviewer</div>
+          <div class="achievement-desc">Write your first review to unlock</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIMILAR TRAILS (inside Overview) -->
+    <div class="similar-trails">
+      <h2>Similar Trails</h2>
+      <div id="similar-trails-list" class="similar-trails-cards"></div>
+    </div>
+  </div>
+
+  <!-- ── PHOTOS TAB ── -->
+  <div class="tab-panel" id="tab-photos">
+    <div class="photo-tab-header">
+      <h2>Trail Photos</h2>
+      <button class="btn-upload-photo" onclick="document.getElementById('photo-file-input').click()">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        Upload Photo
+      </button>
+      <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="addPhoto(this)">
+    </div>
+    <div class="photo-grid" id="photo-grid">
+      <!-- photos injected by JS -->
+    </div>
+  </div>
+
+  <!-- ── REVIEWS TAB ── -->
+  <div class="tab-panel" id="tab-reviews">
+    <div class="reviews-summary">
+      <div class="reviews-big-score">
+        <div class="score" id="reviews-score">4.8</div>
+        <div class="score-stars" id="reviews-score-stars"></div>
+        <div class="score-count" id="reviews-count">Based on 127 reviews</div>
+      </div>
+      <div class="reviews-right">
+        <button class="btn-write-review" onclick="document.getElementById('write-review-form').scrollIntoView({behavior:'smooth'})">Write a Review</button>
+      </div>
+    </div>
+
+    <div id="reviews-list">
+      <!-- Seed reviews injected by JS -->
+    </div>
+
+    <!-- Write Review Form -->
+    <div class="write-review-form" id="write-review-form">
+      <h3>Write a Review</h3>
+      <div class="wrf-field">
+        <label>Your Rating</label>
+        <div class="wrf-stars" id="wrf-stars">
+          <span class="wrf-star" data-val="1">&#9733;</span>
+          <span class="wrf-star" data-val="2">&#9733;</span>
+          <span class="wrf-star" data-val="3">&#9733;</span>
+          <span class="wrf-star" data-val="4">&#9733;</span>
+          <span class="wrf-star" data-val="5">&#9733;</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="wrf-field">
+          <label for="wrf-name">Your Name</label>
+          <input type="text" id="wrf-name" placeholder="e.g. Alex T.">
+        </div>
+        <div class="wrf-field">
+          <label for="wrf-date">Visit Date</label>
+          <input type="text" id="wrf-date" placeholder="e.g. March 2026">
+        </div>
+      </div>
+      <div class="wrf-field">
+        <label for="wrf-text">Your Review</label>
+        <textarea id="wrf-text" placeholder="What was the trail like?"></textarea>
+      </div>
+      <button class="btn-post-review" onclick="postReview()">Post My Review</button>
+    </div>
+  </div>
+
+  <!-- ── CONDITIONS TAB ── -->
+  <div class="tab-panel" id="tab-conditions">
+    <div class="conditions-status">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <div class="conditions-status-text">
+        <strong>Trail Open &amp; In Good Condition</strong>
+        <span id="conditions-updated">Last updated: February 2026</span>
+      </div>
+    </div>
+
+    <div class="conditions-grid">
+      <div class="conditions-card">
+        <div class="cond-icon">🌡️</div>
+        <div class="cond-val" id="cond-temp">--</div>
+        <div class="cond-label">Current Temp</div>
+      </div>
+      <div class="conditions-card">
+        <div class="cond-icon">🌤️</div>
+        <div class="cond-val" id="cond-conditions" style="font-size:20px">--</div>
+        <div class="cond-label">Conditions</div>
+      </div>
+    </div>
+
+    <div class="forecast-section">
+      <h3>Weather Forecast</h3>
+      <div class="forecast-days" id="forecast-days">
+        <div class="forecast-day"><span class="forecast-day-name">Loading...</span></div>
+      </div>
+    </div>
+
+    <div class="reports-section">
+      <h3>Recent Reports</h3>
+      <div id="recent-reports">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </div>
+
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="trails.html">Find Trails</a></li>
+        <li><a href="responsible.html">Hike Responsibly</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://www.wta.org" target="_blank">WTA</a></li>
+        <li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Great Outdoors. All rights reserved.</p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+const trails = {
+  rattlesnake: {
+    name: "Rattlesnake Ledge", image: "../images/trail-1.jpg",
+    difficulty: "Moderate", difficultyClass: "moderate",
+    distance: "4.0 miles", time: "2-3 hours", elevation: "1,160 ft", recommend: "92%",
+    location: "North Bend, WA", updated: "February 10, 2026",
+    lat: 47.4332, lng: -121.7688, mapsUrl: "https://maps.apple.com/?q=Rattlesnake+Ledge&ll=47.4332,-121.7688&dirflg=d",
+    about: "A popular trail offering stunning views of Rattlesnake Lake and the surrounding Cascade Mountains. The trail gains about 1,160 feet in elevation over 2 miles to reach the rocky ledge viewpoint.",
+    safety: "Stay back from cliff edges. Trail can be very crowded on weekends. Dogs must be leashed. No camping at the ledge.",
+    seasonal: "Best April through October. Snow possible November through March. Can be muddy in spring.",
+    similar: ["wallace", "twinfalls", "franklinfalls"],
+    seedReviews: [
+      { name: "Sarah J.", date: "2 weeks ago", rating: 5, text: "Absolutely stunning views! Well-maintained trail with clear signage. The wildflowers were in full bloom. Perfect for a weekend hike." },
+      { name: "Mike T.", date: "1 month ago", rating: 4, text: "Great trail but very busy on weekends. Go early! The ledge views are worth every step." }
+    ]
+  },
+  wallace: {
+    name: "Wallace Falls", image: "../images/trail-2.jpg",
+    difficulty: "Moderate", difficultyClass: "moderate",
+    distance: "5.6 miles", time: "3-4 hours", elevation: "1,300 ft", recommend: "96%",
+    location: "Gold Bar, WA", updated: "February 8, 2026",
+    lat: 47.8677, lng: -121.6793, mapsUrl: "https://maps.apple.com/?q=Wallace+Falls&ll=47.8677,-121.6793&dirflg=d",
+    about: "Experience the power of multiple waterfalls along this rewarding trail through old-growth forest. The main falls drops 265 feet and offers spectacular viewing platforms.",
+    safety: "Trail can be slippery near waterfalls. Stay on marked paths. Watch for wet rocks.",
+    seasonal: "Open year-round. Best spring through fall. Waterfalls most powerful in spring.",
+    similar: ["rattlesnake", "twinfalls", "franklinfalls"],
+    seedReviews: [
+      { name: "Lisa M.", date: "1 week ago", rating: 5, text: "Saw a black bear near mile marker 2. Gave it plenty of space. Beautiful hike!" },
+      { name: "John D.", date: "3 days ago", rating: 4, text: "Trail is dry and clear. Some muddy spots after the creek crossing." }
+    ]
+  },
+  lakeserene: {
+    name: "Lake Serene", image: "../images/trail-3.jpg",
+    difficulty: "Hard", difficultyClass: "hard",
+    distance: "7.2 miles", time: "4-5 hours", elevation: "2,500 ft", recommend: "89%",
+    location: "Index, WA", updated: "February 12, 2026",
+    lat: 47.8282, lng: -121.4114, mapsUrl: "https://maps.apple.com/?q=Lake+Serene+Trail&ll=47.8282,-121.4114&dirflg=d",
+    about: "A challenging trail leading to a stunning alpine lake surrounded by towering peaks. The trail features steep switchbacks and incredible views of Mount Index.",
+    safety: "Snow may be present year-round near the lake. Bring traction devices and layers. Start early to avoid afternoon thunderstorms.",
+    seasonal: "Best July through October. Snow lingers until late June. Trail closes in heavy winter conditions.",
+    similar: ["snowlake", "oysterdome", "rattlesnake"],
+    seedReviews: [
+      { name: "Emma R.", date: "2 weeks ago", rating: 5, text: "The lake is absolutely breathtaking. Tough climb but worth every step. Bring microspikes even in July!" }
+    ]
+  },
+  ebeys: {
+    name: "Ebey's Landing", image: "../images/trail-4.jpg",
+    difficulty: "Easy", difficultyClass: "easy",
+    distance: "5.6 miles", time: "2-3 hours", elevation: "400 ft", recommend: "94%",
+    location: "Whidbey Island, WA", updated: "February 6, 2026",
+    lat: 48.2187, lng: -122.6985, mapsUrl: "https://maps.apple.com/?q=Ebey%27s+Landing&ll=48.2187,-122.6985&dirflg=d",
+    about: "A beautiful coastal loop trail offering sweeping views of the Strait of Juan de Fuca and the Olympic Mountains. This hidden gem features open prairie, beaches, and bluff views.",
+    safety: "Watch for unstable bluff edges. Trail can be muddy in winter. Strong winds common along the coast.",
+    seasonal: "Open year-round. Best spring through fall. Wildflowers bloom April through June.",
+    similar: ["twinfalls", "franklinfalls", "rattlesnake"],
+    seedReviews: [
+      { name: "Carlos V.", date: "5 days ago", rating: 5, text: "Hidden gem! The Olympic Mountains views from the bluffs are incredible. Not many people know about this one." }
+    ]
+  },
+  snowlake: {
+    name: "Snow Lake", image: "../images/trail-5.jpg",
+    difficulty: "Hard", difficultyClass: "hard",
+    distance: "7.2 miles", time: "4-5 hours", elevation: "1,800 ft", recommend: "91%",
+    location: "Snoqualmie Pass, WA", updated: "February 14, 2026",
+    lat: 47.4285, lng: -121.4457, mapsUrl: "https://maps.apple.com/?q=Snow+Lake+Trail&ll=47.4285,-121.4457&dirflg=d",
+    about: "One of the most popular hikes in the Alpine Lakes Wilderness. The trail climbs through forest and meadows to reach a stunning glacially carved lake surrounded by rocky peaks.",
+    safety: "Snow lingers into summer. Bring microspikes early in the season. Permit required on weekends May-October.",
+    seasonal: "Best July through October. Snow typically clears by late June. Permit required in summer.",
+    similar: ["lakeserene", "oysterdome", "rattlesnake"],
+    seedReviews: [
+      { name: "Amy K.", date: "1 month ago", rating: 4, text: "Stunning alpine lake. Get your permit early — it sells out fast in summer. Trail conditions were perfect in August." }
+    ]
+  },
+  twinfalls: {
+    name: "Twin Falls", image: "../images/trail-6.jpg",
+    difficulty: "Easy", difficultyClass: "easy",
+    distance: "2.6 miles", time: "1-2 hours", elevation: "500 ft", recommend: "97%",
+    location: "North Bend, WA", updated: "February 9, 2026",
+    lat: 47.4621, lng: -121.6943, mapsUrl: "https://maps.apple.com/?q=Twin+Falls+Trail&ll=47.4621,-121.6943&dirflg=d",
+    about: "A short and rewarding trail leading to two spectacular waterfalls along the South Fork Snoqualmie River. The trail features suspension bridges and old-growth forest.",
+    safety: "Trail is paved in sections but can be slippery. Keep children away from cliff edges near the falls.",
+    seasonal: "Open year-round. Beautiful in all seasons. Most impressive in spring and after heavy rain.",
+    similar: ["franklinfalls", "rattlesnake", "wallace"],
+    seedReviews: [
+      { name: "Ben H.", date: "3 days ago", rating: 5, text: "Perfect family hike. The suspension bridge is so fun! Waterfalls were roaring after all the recent rain." }
+    ]
+  },
+  oysterdome: {
+    name: "Oyster Dome", image: "../images/trail-7.jpg",
+    difficulty: "Hard", difficultyClass: "hard",
+    distance: "6.4 miles", time: "3-4 hours", elevation: "1,800 ft", recommend: "88%",
+    location: "Blanchard Mountain, WA", updated: "February 7, 2026",
+    lat: 48.5885, lng: -122.3785, mapsUrl: "https://maps.apple.com/?q=Oyster+Dome&ll=48.5885,-122.3785&dirflg=d",
+    about: "A hidden gem in the Chuckanut Mountains offering one of the best views in the region. The rocky summit provides panoramic views of the San Juan Islands, Puget Sound, and the Olympic Peninsula.",
+    safety: "Steep and strenuous with 1,800 feet elevation gain. Rocky sections require careful footing. Discover Pass required.",
+    seasonal: "Best April through October. Can be muddy in spring. Views best on clear days.",
+    similar: ["lakeserene", "snowlake", "ebeys"],
+    seedReviews: [
+      { name: "Nina S.", date: "2 weeks ago", rating: 5, text: "360-degree views of the San Juans on a clear day. One of my all-time favorites in the PNW." }
+    ]
+  },
+  franklinfalls: {
+    name: "Franklin Falls", image: "../images/trail-8.jpg",
+    difficulty: "Easy", difficultyClass: "easy",
+    distance: "2.0 miles", time: "1-2 hours", elevation: "200 ft", recommend: "98%",
+    location: "Snoqualmie Pass, WA", updated: "February 14, 2026",
+    lat: 47.4481, lng: -121.5682, mapsUrl: "https://maps.apple.com/?q=Franklin+Falls&ll=47.4481,-121.5682&dirflg=d",
+    about: "Short, accessible trail to a stunning 70-foot waterfall. Perfect for families and those seeking a shorter adventure. The trail follows the South Fork Snoqualmie River through beautiful forest.",
+    safety: "Road to trailhead closes in winter. Check road conditions before visiting. Area can be icy in cold weather.",
+    seasonal: "Best May through October. Road to trailhead closed November through April.",
+    similar: ["twinfalls", "rattlesnake", "ebeys"],
+    seedReviews: [
+      { name: "Priya M.", date: "1 week ago", rating: 5, text: "So easy and so beautiful! Brought my 4-year-old and she loved it. The falls are massive up close." }
+    ]
+  }
+};
+
+// ── INIT ──
+const params = new URLSearchParams(window.location.search);
+const trailKey = params.get('trail');
+const trail = trails[trailKey];
+
+if (trail) {
+  document.title = trail.name + " - The Great Outdoors";
+  document.getElementById('trail-image').src = trail.image;
+  document.getElementById('trail-image').alt = trail.name;
+  document.getElementById('trail-name').textContent = trail.name;
+  const diffEl = document.getElementById('trail-difficulty');
+  diffEl.textContent = trail.difficulty;
+  diffEl.className = 'difficulty ' + trail.difficultyClass;
+  document.getElementById('trail-rating-hero').textContent = '⭐ 4.8 · ' + trail.recommend + ' recommend';
+  document.getElementById('trail-distance').textContent = trail.distance;
+  document.getElementById('trail-time').textContent = trail.time;
+  document.getElementById('trail-elevation').textContent = trail.elevation;
+  document.getElementById('trail-recommend').textContent = trail.recommend;
+
+  // Breadcrumb
+  document.getElementById('breadcrumb-trail-name').textContent = trail.name;
+
+  // Trail alert
+  const trailAlerts = {
+    rattlesnake: 'Trail is open. Expect crowded parking on weekends — arrive before 8am.',
+    wallace: 'Minor muddy sections near the upper falls. Waterproof boots recommended.',
+    lakeserene: 'Snow possible above 3,000 ft through June. Microspikes recommended.',
+    ebeys: 'Trail open. Strong coastal winds expected this weekend.',
+    snowlake: 'Closed Nov–May due to avalanche risk. Check conditions before visiting.',
+    twinfalls: 'Trail open. Bridge repairs scheduled for May — check back for updates.',
+    oysterdome: 'Trail open. Excellent visibility forecast for the weekend.',
+    franklinfalls: 'Trail open. Family-friendly. Ice possible near falls in winter.'
+  };
+  const alertEl = document.getElementById('alert-text');
+  if (alertEl && trailAlerts[trailKey]) alertEl.textContent = trailAlerts[trailKey];
+  document.getElementById('trail-about').textContent = trail.about;
+  document.getElementById('trail-safety').textContent = trail.safety;
+  document.getElementById('trail-seasonal').textContent = trail.seasonal;
+  document.getElementById('conditions-updated').textContent = 'Last updated: ' + trail.updated;
+
+  if (trail.mapsUrl) {
+    document.getElementById('directions-btn').href = trail.mapsUrl;
+    document.getElementById('directions-link').href = trail.mapsUrl;
+  }
+  document.getElementById('location-name-text').textContent = trail.location;
+
+  // OpenStreetMap embed — free, no API key
+  if (trail.lat && trail.lng) {
+    const pad = 0.018;
+    const bbox = `${trail.lng - pad},${trail.lat - pad},${trail.lng + pad},${trail.lat + pad}`;
+    document.getElementById('trail-map').src =
+      `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${trail.lat},${trail.lng}`;
+  }
+
+  // Save button state
+  const saved = JSON.parse(localStorage.getItem('savedTrails') || '[]');
+  if (saved.includes(trailKey)) document.getElementById('save-btn').classList.add('saved');
+
+  // Seed reviews
+  renderSeedReviews(trail.seedReviews || []);
+  loadUserReviews();
+
+  // Similar trails
+  renderSimilarTrails(trail.similar || []);
+
+  // Initial photos (use trail hero image as a starter)
+  initPhotos();
+
+  // Weather
+  fetchWeather(trail.lat, trail.lng);
+}
+
+lucide.createIcons();
+
+// ── TABS ──
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── SAVE ──
+function toggleSave() {
+  const btn = document.getElementById('save-btn');
+  const saved = JSON.parse(localStorage.getItem('savedTrails') || '[]');
+  const idx = saved.indexOf(trailKey);
+  if (idx === -1) {
+    saved.push(trailKey);
+    btn.classList.add('saved');
+    btn.querySelector('span') && (btn.querySelector('span').textContent = 'Saved!');
+  } else {
+    saved.splice(idx, 1);
+    btn.classList.remove('saved');
+  }
+  localStorage.setItem('savedTrails', JSON.stringify(saved));
+}
+
+// ── SHARE ──
+function shareTrail() {
+  if (navigator.share && trail) {
+    navigator.share({ title: trail.name + ' - The Great Outdoors', url: window.location.href }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.getElementById('share-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    });
+  }
+}
+
+// ── PHOTOS ──
+function initPhotos() {
+  const grid = document.getElementById('photo-grid');
+  const key = 'photos_' + trailKey;
+  const photos = JSON.parse(localStorage.getItem(key) || '[]');
+  if (photos.length === 0) {
+    grid.innerHTML = '<div class="photo-empty"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>No photos yet. Be the first to upload one!</div>';
+  } else {
+    renderPhotos(photos);
+  }
+}
+
+function renderPhotos(photos) {
+  const grid = document.getElementById('photo-grid');
+  grid.innerHTML = photos.map(src => `<div class="photo-grid-item"><img src="${src}" alt="Trail photo"></div>`).join('');
+}
+
+function addPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const key = 'photos_' + trailKey;
+    const photos = JSON.parse(localStorage.getItem(key) || '[]');
+    photos.unshift(e.target.result);
+    localStorage.setItem(key, JSON.stringify(photos.slice(0, 12)));
+    renderPhotos(photos.slice(0, 12));
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+// ── REVIEWS ──
+let wrfRating = 0;
+const wrfStars = document.querySelectorAll('.wrf-star');
+wrfStars.forEach(s => {
+  s.addEventListener('mouseover', () => litWrf(+s.dataset.val));
+  s.addEventListener('mouseout', () => litWrf(wrfRating));
+  s.addEventListener('click', () => { wrfRating = +s.dataset.val; litWrf(wrfRating); });
+});
+function litWrf(n) { wrfStars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= n)); }
+
+function starSVG(filled) {
+  return `<svg viewBox="0 0 24 24" fill="${filled ? '#f59e0b' : '#e5e7eb'}"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>`;
+}
+
+function buildReviewEl(r) {
+  const stars = Array.from({length:5}, (_,i) => starSVG(i < r.rating)).join('');
+  const div = document.createElement('div');
+  div.className = 'review-item';
+  div.innerHTML = `
+    <div class="review-meta">
+      <span class="review-author">${r.name}</span>
+      <span class="review-date">${r.date || 'Recently'}</span>
+    </div>
+    <div class="review-stars">${stars}</div>
+    <p class="review-text">${r.text}</p>
+    <div class="review-actions">
+      <button class="review-action-btn" onclick="this.querySelector('span').textContent = parseInt(this.querySelector('span').textContent||'0')+1">
+        <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        Helpful <span></span>
+      </button>
+      <button class="review-action-btn">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Reply
+      </button>
+    </div>`;
+  return div;
+}
+
+function renderSeedReviews(reviews) {
+  const list = document.getElementById('reviews-list');
+  reviews.forEach(r => list.appendChild(buildReviewEl(r)));
+}
+
+function loadUserReviews() {
+  const key = 'reviews_' + trailKey;
+  const saved = JSON.parse(localStorage.getItem(key) || '[]');
+  const list = document.getElementById('reviews-list');
+  saved.forEach(r => list.appendChild(buildReviewEl(r)));
+}
+
+function postReview() {
+  const name = document.getElementById('wrf-name').value.trim();
+  const text = document.getElementById('wrf-text').value.trim();
+  const date = document.getElementById('wrf-date').value.trim() || 'Just now';
+  if (!name) { document.getElementById('wrf-name').focus(); return; }
+  if (!wrfRating) { alert('Please select a star rating.'); return; }
+  if (!text) { document.getElementById('wrf-text').focus(); return; }
+  const review = { name, text, date, rating: wrfRating };
+  const key = 'reviews_' + trailKey;
+  const saved = JSON.parse(localStorage.getItem(key) || '[]');
+  saved.unshift(review);
+  localStorage.setItem(key, JSON.stringify(saved));
+  const card = buildReviewEl(review);
+  document.getElementById('reviews-list').prepend(card);
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  document.getElementById('wrf-name').value = '';
+  document.getElementById('wrf-text').value = '';
+  document.getElementById('wrf-date').value = '';
+  wrfRating = 0; litWrf(0);
+}
+
+// ── SIMILAR TRAILS ──
+function renderSimilarTrails(keys) {
+  const list = document.getElementById('similar-trails-list');
+  keys.forEach(k => {
+    const t = trails[k];
+    if (!t) return;
+    const a = document.createElement('a');
+    a.className = 'similar-trail-item';
+    a.href = 'trail-detail.html?trail=' + k;
+    a.innerHTML = `
+      <div class="similar-trail-name">${t.name}</div>
+      <div class="similar-trail-meta">${t.distance} · ${t.time} · ${t.difficulty}</div>`;
+    list.appendChild(a);
+  });
+}
+
+// ── WEATHER (Open-Meteo) ──
+const weatherCodes = {
+  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+  45:'Fog',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',
+  80:'Rain showers',81:'Heavy showers',82:'Violent showers',85:'Snow showers',95:'Thunderstorm'
+};
+const weatherEmoji = {
+  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
+  45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',
+  61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',
+  80:'🌧️',81:'⛈️',82:'⛈️',85:'❄️',95:'⛈️'
+};
+
+function fetchWeather(lat, lng) {
+  if (!lat || !lng) return;
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weathercode&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FLos_Angeles&forecast_days=4`)
+    .then(r => r.json())
+    .then(data => {
+      const c = data.current;
+      // Conditions tab
+      document.getElementById('cond-temp').textContent = Math.round(c.temperature_2m) + '°F';
+      document.getElementById('cond-conditions').textContent = weatherCodes[c.weathercode] || 'Unknown';
+
+      // Forecast days (Conditions tab + Overview tab)
+      const days = data.daily;
+      const fContainer = document.getElementById('forecast-days');
+      const oContainer = document.getElementById('overview-forecast-days');
+      fContainer.innerHTML = '';
+      oContainer.innerHTML = '';
+      for (let i = 0; i < Math.min(days.time.length, 3); i++) {
+        const label = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : new Date(days.time[i]).toLocaleDateString('en-US',{weekday:'long'});
+        const code = days.weathercode[i];
+        const hi = Math.round(days.temperature_2m_max[i]);
+        const lo = Math.round(days.temperature_2m_min[i]);
+        // Conditions tab row
+        const row = document.createElement('div');
+        row.className = 'forecast-day';
+        row.innerHTML = `
+          <span class="forecast-day-name">${label}</span>
+          <span class="forecast-day-icon">${weatherEmoji[code] || '🌤️'}</span>
+          <span class="forecast-day-desc">${weatherCodes[code] || ''}</span>
+          <span class="forecast-day-temp">${hi}° / ${lo}°</span>`;
+        fContainer.appendChild(row);
+        // Overview tab row
+        const oRow = document.createElement('div');
+        oRow.className = 'overview-forecast-day';
+        oRow.innerHTML = `
+          <div class="ofd-left">
+            <span class="ofd-icon">${weatherEmoji[code] || '🌤️'}</span>
+            <div>
+              <div class="ofd-day">${label}</div>
+              <div class="ofd-desc">${weatherCodes[code] || ''}</div>
+            </div>
+          </div>
+          <span class="ofd-temp">${hi}°F</span>`;
+        oContainer.appendChild(oRow);
+      }
+
+      // Recent reports (static seed)
+      const reportsHtml = `
+        <div class="report-item">
+          <div class="report-meta"><span class="report-author">John D.</span><span class="report-date">3 days ago</span></div>
+          <p class="report-text">Trail is dry and clear. Some muddy spots after the creek crossing.</p>
+        </div>
+        <div class="report-item">
+          <div class="report-meta"><span class="report-author">Lisa M.</span><span class="report-date">1 week ago</span></div>
+          <p class="report-text">Saw a black bear near the trailhead. Gave it plenty of space. Beautiful hike!</p>
+        </div>`;
+      document.getElementById('recent-reports').innerHTML = reportsHtml;
+    })
+    .catch(() => {
+      document.getElementById('cond-temp').textContent = 'N/A';
+      document.getElementById('cond-conditions').textContent = 'Unavailable';
+      document.getElementById('forecast-days').innerHTML = '<div class="forecast-day"><span class="forecast-day-name">Weather unavailable</span></div>';
+      document.getElementById('overview-forecast-days').innerHTML = '<div class="overview-forecast-day"><span class="ofd-day" style="color:#aaa">Weather unavailable</span></div>';
+    });
+}
+
+// ── NAV ──
+const hamburger = document.getElementById('hamburger');
+const nav = document.getElementById('nav');
+hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+const btn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+<script src="../cookie-banner.js"></script>
+</body>
+</html>

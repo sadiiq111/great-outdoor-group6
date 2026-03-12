@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - The Great Outdoors</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand svg {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .nav-auth {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 24px;
+    }
+
+    .btn-login {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .btn-signup {
+      background: #4a90d9;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .auth-page {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      background: #f4f4f4;
+    }
+
+    .auth-card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .auth-card h1 {
+      font-size: 28px;
+      color: #222;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.2s;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus {
+      border-color: #2d5016;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #555;
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    .checkbox-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: #2d5016;
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 14px;
+      background: #2d5016;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-full:hover {
+      background: #3d6b1e;
+    }
+
+    .auth-alert {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .auth-alert.error {
+      background: #ffd5d5;
+      color: #c0392b;
+      border: 1px solid #f5c6c6;
+    }
+
+    .auth-alert.success {
+      background: #d5f5d5;
+      color: #1e8449;
+      border: 1px solid #a9dfbf;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .auth-footer a {
+      color: #2d5016;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .auth-card {
+        padding: 28px 20px;
+      }
+
+      .nav-auth {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<div class="auth-page">
+  <div class="auth-card">
+
+    <h1>Create Account</h1>
+    <p class="auth-subtitle">Join our community of outdoor enthusiasts</p>
+
+    <div class="form-group">
+      <label for="signupName">Full Name</label>
+      <input type="text" id="signupName" class="form-input" placeholder="John Doe">
+    </div>
+
+    <div class="form-group">
+      <label for="signupEmail">Email</label>
+      <input type="email" id="signupEmail" class="form-input" placeholder="your@email.com">
+    </div>
+
+    <div class="form-group">
+      <label for="signupPassword">Password</label>
+      <input type="password" id="signupPassword" class="form-input" placeholder="Create a password (min 6 characters)">
+    </div>
+
+    <div class="form-group">
+      <label for="signupConfirm">Confirm Password</label>
+      <input type="password" id="signupConfirm" class="form-input" placeholder="Re-enter your password">
+    </div>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" id="agreeTerms">
+        I agree to the Terms & Conditions
+      </label>
+    </div>
+
+    <button class="btn-full" onclick="handleSignup()">Create Account</button>
+
+    <div id="auth-message"></div>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
+</footer>
+
+<script>
+  function handleSignup() {
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value.trim();
+    const confirm = document.getElementById('signupConfirm').value.trim();
+    const agreeTerms = document.getElementById('agreeTerms').checked;
+    const messageEl = document.getElementById('auth-message');
+
+    messageEl.innerHTML = '';
+
+    if (!name || !email || !password || !confirm) {
+      messageEl.innerHTML = '<div class="auth-alert error">Please fill in all fields.</div>';
+      return;
+    }
+
+    if (password.length < 6) {
+      messageEl.innerHTML = '<div class="auth-alert error">Password must be at least 6 characters.</div>';
+      return;
+    }
+
+    if (password !== confirm) {
+      messageEl.innerHTML = '<div class="auth-alert error">Passwords do not match.</div>';
+      return;
+    }
+
+    if (!agreeTerms) {
+      messageEl.innerHTML = '<div class="auth-alert error">You must agree to the Terms & Conditions.</div>';
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const existing = users.find(u => u.email === email);
+
+    if (existing) {
+      messageEl.innerHTML = '<div class="auth-alert error">An account with this email already exists.</div>';
+      return;
+    }
+
+    const newUser = {
+      name,
+      email,
+      password,
+      joinedDate: new Date().toISOString(),
+      favorites: []
+    };
+
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    messageEl.innerHTML = '<div class="auth-alert success">Account created! Redirecting to login...</div>';
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 2000);
+  }
+
+  document.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleSignup();
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => nav.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>

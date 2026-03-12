@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the seven Leave No Trace principles and how to hike responsibly in the Pacific Northwest. Protect the trails for future generations.">
+  <title>Hike Responsibly - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .nav-donate { background: rgba(255,255,255,0.18); color: white !important; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); transition: background 0.2s; }
+    .nav-donate:hover { background: rgba(255,255,255,0.3) !important; }
+
+    /* ── HERO ── */
+    .resp-hero {
+      position: relative; height: 72vh; min-height: 480px;
+      display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden;
+    }
+    .resp-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; z-index: 0; }
+    .resp-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%); z-index: 1; }
+    .resp-hero-text { position: relative; z-index: 2; color: white; padding: 0 24px; max-width: 760px; }
+    .resp-hero-text .label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #86efac; margin-bottom: 14px; }
+    .resp-hero-text h1 { font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .resp-hero-text p { font-size: 19px; opacity: 0.88; line-height: 1.6; margin-bottom: 28px; }
+    .hero-scroll-hint { display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(255,255,255,0.6); font-size: 13px; animation: bounce 2s infinite; }
+    .hero-scroll-hint svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ── IMPACT STATS ── */
+    .impact-bar { background: #2d5016; padding: 24px 0; }
+    .impact-bar-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+    .impact-stat { text-align: center; padding: 4px 12px; border-right: 1px solid rgba(255,255,255,0.18); }
+    .impact-stat:last-child { border-right: none; }
+    .impact-stat .num { font-size: 26px; font-weight: 900; color: white; }
+    .impact-stat .lbl { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── SHARED LAYOUT ── */
+    .resp-section { padding: 72px 24px; }
+    .resp-section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2d5016; margin-bottom: 8px; }
+    .section-title { font-size: 32px; font-weight: 800; color: #111; margin-bottom: 12px; }
+    .section-sub { font-size: 16px; color: #666; line-height: 1.7; margin-bottom: 40px; max-width: 680px; }
+
+    /* ── MISSION STATEMENT ── */
+    .mission { background: white; }
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .mission-text h2 { font-size: 28px; font-weight: 800; color: #111; margin-bottom: 16px; }
+    .mission-text p { font-size: 16px; color: #555; line-height: 1.8; margin-bottom: 16px; }
+    .mission-pillars { display: flex; flex-direction: column; gap: 12px; }
+    .mission-pillar { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #f0f4ed; border-radius: 10px; }
+    .mission-pillar-icon { font-size: 22px; flex-shrink: 0; }
+    .mission-pillar strong { display: block; font-size: 14px; color: #111; margin-bottom: 2px; }
+    .mission-pillar span { font-size: 13px; color: #888; }
+
+    /* ── LNT ACCORDION ── */
+    .lnt-section { background: #f9fafb; }
+    .lnt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .lnt-card { background: white; border-radius: 14px; border: 1.5px solid #e5e7eb; overflow: hidden; transition: box-shadow 0.2s; }
+    .lnt-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .lnt-card-header { display: flex; align-items: center; gap: 16px; padding: 20px; cursor: pointer; user-select: none; }
+    .lnt-num { width: 36px; height: 36px; border-radius: 10px; background: #2d5016; color: white; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .lnt-card-header h3 { flex: 1; font-size: 15px; font-weight: 700; color: #111; margin: 0; }
+    .lnt-toggle { width: 22px; height: 22px; border-radius: 50%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, transform 0.25s; }
+    .lnt-toggle svg { width: 12px; height: 12px; stroke: #555; fill: none; stroke-width: 2.5; transition: transform 0.25s; }
+    .lnt-card.open .lnt-toggle { background: #2d5016; }
+    .lnt-card.open .lnt-toggle svg { stroke: white; transform: rotate(180deg); }
+    .lnt-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; padding: 0 20px; }
+    .lnt-card.open .lnt-body { max-height: 300px; padding: 0 20px 20px; }
+    .lnt-body p { font-size: 14px; color: #555; line-height: 1.75; margin: 0 0 12px; }
+    .lnt-tips { display: flex; flex-direction: column; gap: 6px; }
+    .lnt-tip { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #444; }
+    .lnt-tip::before { content: '✓'; color: #2d5016; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── DO / DON'T ── */
+    .dodonts-section { background: white; }
+    .dodonts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .dodonts-col h3 { font-size: 17px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .do-col h3 { color: #166534; }
+    .dont-col h3 { color: #991b1b; }
+    .dd-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; margin-bottom: 8px; font-size: 14px; color: #333; line-height: 1.5; }
+    .do-item { background: #f0fdf4; }
+    .dont-item { background: #fff5f5; }
+    .dd-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── TRAIL ETIQUETTE ── */
+    .etiquette-section { background: #f9fafb; }
+    .etiquette-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .etiquette-card { background: white; border-radius: 14px; padding: 24px 20px; border: 1px solid #e5e7eb; text-align: center; }
+    .etiquette-icon { font-size: 36px; margin-bottom: 12px; }
+    .etiquette-card h4 { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .etiquette-card p { font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+
+    /* ── WILDLIFE ── */
+    .wildlife-section { background: white; }
+    .wildlife-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .wildlife-card { border-radius: 14px; border: 1px solid #e5e7eb; overflow: hidden; }
+    .wildlife-header { padding: 16px 18px 10px; display: flex; align-items: center; gap: 12px; }
+    .wildlife-emoji { font-size: 28px; }
+    .wildlife-header h4 { font-size: 15px; font-weight: 700; color: #111; margin: 0; }
+    .wildlife-card p { font-size: 13px; color: #666; line-height: 1.6; padding: 0 18px 16px; margin: 0; }
+    .wildlife-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin: 0 18px 14px; }
+    .tag-caution { background: #fef3c7; color: #92400e; }
+    .tag-safe { background: #dcfce7; color: #166534; }
+    .tag-alert { background: #fee2e2; color: #991b1b; }
+
+    /* ── EMERGENCY ── */
+    .emergency-section { background: #1a3009; color: white; padding: 72px 24px; }
+    .emergency-inner { max-width: 900px; margin: 0 auto; }
+    .emergency-inner .section-label { color: #86efac; }
+    .emergency-inner .section-title { color: white; }
+    .emergency-inner .section-sub { color: rgba(255,255,255,0.7); }
+    .emergency-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .emergency-card { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 22px 20px; border: 1px solid rgba(255,255,255,0.12); }
+    .emergency-card h4 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .emergency-card ul { margin: 0; padding-left: 18px; }
+    .emergency-card li { font-size: 13px; color: rgba(255,255,255,0.75); margin-bottom: 5px; line-height: 1.5; }
+
+    /* ── PLEDGE ── */
+    .pledge-section { background: #f0f4ed; padding: 72px 24px; text-align: center; }
+    .pledge-inner { max-width: 600px; margin: 0 auto; }
+    .pledge-inner h2 { font-size: 30px; font-weight: 800; color: #111; margin-bottom: 10px; }
+    .pledge-inner p { color: #666; font-size: 16px; line-height: 1.7; margin-bottom: 28px; }
+    .pledge-form { display: flex; flex-direction: column; gap: 12px; max-width: 420px; margin: 0 auto 16px; }
+    .pledge-form input { border: 1.5px solid #c3dab5; border-radius: 10px; padding: 12px 16px; font-size: 15px; outline: none; background: white; transition: border-color 0.2s; }
+    .pledge-form input:focus { border-color: #2d5016; }
+    .btn-pledge { background: #2d5016; color: white; border: none; border-radius: 28px; padding: 14px 32px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    .btn-pledge:hover { background: #3a6b1e; }
+    .pledge-success { display: none; background: #2d5016; color: white; border-radius: 12px; padding: 16px 24px; font-size: 16px; font-weight: 600; max-width: 420px; margin: 0 auto; }
+    .pledge-count { font-size: 14px; color: #888; margin-top: 10px; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .resp-hero-text h1 { font-size: 32px; }
+      .resp-hero-text p { font-size: 16px; }
+      .impact-bar-inner { grid-template-columns: repeat(2,1fr); gap: 16px; }
+      .impact-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 12px; }
+      .impact-stat:nth-child(3), .impact-stat:nth-child(4) { border-bottom: none; }
+      .mission-grid, .lnt-grid, .dodonts-grid, .etiquette-grid, .wildlife-grid, .emergency-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="account.html">My Account</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="resp-hero" id="main-content">
+  <img src="../images/responsible-hero.jpg" alt="Hiking responsibly in Pacific Northwest">
+  <div class="resp-hero-overlay"></div>
+  <div class="resp-hero-text">
+    <div class="label">Leave No Trace · Trail Etiquette · Wildlife Safety</div>
+    <h1>Hike Responsibly</h1>
+    <p>The Pacific Northwest's wild places belong to all of us. Learn how to protect them for the generations that follow.</p>
+    <div class="hero-scroll-hint">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      Scroll to explore
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STATS BAR -->
+<div class="impact-bar">
+  <div class="impact-bar-inner">
+    <div class="impact-stat"><div class="num">12,400+</div><div class="lbl">Hikers Pledged</div></div>
+    <div class="impact-stat"><div class="num">2.3 tons</div><div class="lbl">Trash Removed</div></div>
+    <div class="impact-stat"><div class="num">847</div><div class="lbl">Trail Volunteers</div></div>
+    <div class="impact-stat"><div class="num">340 mi</div><div class="lbl">Trails Maintained</div></div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div class="resp-section mission">
+  <div class="resp-section-inner">
+    <div class="mission-grid">
+      <div class="mission-text">
+        <p class="section-label">Our Commitment</p>
+        <h2>Stewardship Starts With You</h2>
+        <p>The Pacific Northwest's trails are treasures shared by everyone. With growing visitation, our collective responsibility grows too. Small actions — staying on trail, packing out trash, keeping noise low — add up to big impact when thousands of hikers practice them.</p>
+        <p>These aren't just rules. They're principles that keep wild places wild.</p>
+      </div>
+      <div class="mission-pillars">
+        <div class="mission-pillar">
+          <div class="mission-pillar-icon">🌲</div>
+          <div><strong>Protect the Ecosystem</strong><span>Plants, animals, and waterways depend on hiker behavior</span></div>
+        </div>
+        <div class="mission-pillar">
+          <div class="mission-pillar-icon">👣</div>
+          <div><strong>Stay on Trail</strong><span>Off-trail travel destroys fragile alpine vegetation</span></div>
+        </div>
+        <div class="mission-pillar">
+          <div class="mission-pillar-icon">🤝</div>
+          <div><strong>Respect Others</strong><span>Share the trail — yield, keep noise down, be kind</span></div>
+        </div>
+        <div class="mission-pillar">
+          <div class="mission-pillar-icon">🎒</div>
+          <div><strong>Pack It In, Pack It Out</strong><span>Leave every trail cleaner than you found it</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEAVE NO TRACE ACCORDION -->
+<div class="resp-section lnt-section">
+  <div class="resp-section-inner">
+    <p class="section-label">Leave No Trace</p>
+    <h2 class="section-title">Seven Core Principles</h2>
+    <p class="section-sub">Click any principle to expand detailed tips for hiking in the Pacific Northwest.</p>
+    <div class="lnt-grid" id="lnt-grid">
+
+      <div class="lnt-card">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">1</div>
+          <h3>Plan Ahead & Prepare</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>Good planning prevents emergencies and reduces environmental impact. Know the regulations and conditions before you go.</p>
+          <div class="lnt-tips">
+            <div class="lnt-tip">Check trail conditions and weather forecasts before departing</div>
+            <div class="lnt-tip">Download offline maps — cell service is unreliable in the Cascades</div>
+            <div class="lnt-tip">Research permit requirements (many popular trails require advance booking)</div>
+            <div class="lnt-tip">Tell someone your itinerary and expected return time</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lnt-card">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">2</div>
+          <h3>Travel on Durable Surfaces</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>Staying on established trails is the single most impactful thing hikers can do to protect backcountry ecosystems.</p>
+          <div class="lnt-tips">
+            <div class="lnt-tip">Walk single file through the middle of the trail — even when it's muddy</div>
+            <div class="lnt-tip">Never shortcut switchbacks — it causes severe erosion</div>
+            <div class="lnt-tip">Camp at least 200 feet from lakes, streams, and trails</div>
+            <div class="lnt-tip">On alpine terrain, step on rock or snow, never fragile vegetation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lnt-card">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">3</div>
+          <h3>Dispose of Waste Properly</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>Pack out everything you pack in — including food scraps, orange peels, and apple cores (they don't decompose as fast as you think).</p>
+          <div class="lnt-tips">
+            <div class="lnt-tip">Carry a small trash bag — pick up litter you find too</div>
+            <div class="lnt-tip">Bury human waste in a cathole 6–8 inches deep, 200 ft from water</div>
+            <div class="lnt-tip">Pack out all toilet paper and hygiene products</div>
+            <div class="lnt-tip">Use biodegradable soap and wash dishes 200 ft from any water source</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lnt-card">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">4</div>
+          <h3>Leave What You Find</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>Take only photographs, leave only footprints. Natural and cultural objects are part of the ecosystem and belong where they are.</p>
+          <div class="lnt-tips">
+            <div class="lnt-tip">Don't pick wildflowers, berries, or remove rocks and wood</div>
+            <div class="lnt-tip">Leave historical and cultural artifacts untouched</div>
+            <div class="lnt-tip">Don't build cairns, shelters, or trenches</div>
+            <div class="lnt-tip">Avoid introducing or transporting non-native species</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lnt-card">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">5</div>
+          <h3>Minimize Campfire Impacts</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>Many areas in the Pacific Northwest prohibit campfires in summer due to wildfire risk. Always check current regulations.</p>
+          <div class="lnt-tips">
+            <div class="lnt-tip">Use a lightweight camp stove instead of a fire when possible</div>
+            <div class="lnt-tip">Only use established fire rings where fires are permitted</div>
+            <div class="lnt-tip">Keep fires small — only burn sticks you can break by hand</div>
+            <div class="lnt-tip">Ensure fires are completely cold before leaving camp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lnt-card">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">6</div>
+          <h3>Respect Wildlife</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>The PNW is home to bears, cougars, elk, and countless other species. Give them space — for your safety and theirs.</p>
+          <div class="lnt-tips">
+            <div class="lnt-tip">Observe wildlife from a distance — never approach or feed animals</div>
+            <div class="lnt-tip">Store food in a bear canister or hang it 10 ft up and 4 ft from a tree</div>
+            <div class="lnt-tip">Keep dogs on leash — they can trigger wildlife encounters</div>
+            <div class="lnt-tip">Make noise on the trail to avoid surprising bears</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lnt-card" style="grid-column: 1 / -1;">
+        <div class="lnt-card-header" onclick="toggleLNT(this)">
+          <div class="lnt-num">7</div>
+          <h3>Be Considerate of Other Visitors</h3>
+          <div class="lnt-toggle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="lnt-body">
+          <p>Everyone on the trail deserves a quality experience. A little courtesy goes a long way.</p>
+          <div class="lnt-tips" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div class="lnt-tip">Yield to uphill hikers — they have right of way</div>
+            <div class="lnt-tip">Step aside to let faster parties pass safely</div>
+            <div class="lnt-tip">Keep music to yourself — use headphones or keep it silent</div>
+            <div class="lnt-tip">Keep group conversations at a natural speaking volume</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- DO / DON'T -->
+<div class="resp-section dodonts-section">
+  <div class="resp-section-inner">
+    <p class="section-label">Quick Reference</p>
+    <h2 class="section-title">Do's & Don'ts on the Trail</h2>
+    <p class="section-sub">The most common mistakes hikers make — and how to avoid them.</p>
+    <div class="dodonts-grid">
+      <div class="do-col">
+        <h3>✅ Do This</h3>
+        <div class="dd-item do-item"><span class="dd-icon">💧</span>Carry more water than you think you need — at least 0.5L per hour</div>
+        <div class="dd-item do-item"><span class="dd-icon">📍</span>Stay on the marked trail, especially in alpine and meadow zones</div>
+        <div class="dd-item do-item"><span class="dd-icon">🐾</span>Keep dogs on a 6-foot leash at all times</div>
+        <div class="dd-item do-item"><span class="dd-icon">🗑️</span>Pack out all trash, including food scraps and peels</div>
+        <div class="dd-item do-item"><span class="dd-icon">📣</span>Make noise in bear country — talk, clap, use a bear bell</div>
+        <div class="dd-item do-item"><span class="dd-icon">☁️</span>Turn around if weather deteriorates — no summit is worth your safety</div>
+      </div>
+      <div class="dont-col">
+        <h3>❌ Don't Do This</h3>
+        <div class="dd-item dont-item"><span class="dd-icon">🚫</span>Don't feed wildlife — it makes them dependent and aggressive</div>
+        <div class="dd-item dont-item"><span class="dd-icon">🚫</span>Don't play music out loud — it disturbs others and scares wildlife</div>
+        <div class="dd-item dont-item"><span class="dd-icon">🚫</span>Don't cut switchbacks — even if the trail looks long. It causes erosion.</div>
+        <div class="dd-item dont-item"><span class="dd-icon">🚫</span>Don't pick wildflowers or remove rocks, even as souvenirs</div>
+        <div class="dd-item dont-item"><span class="dd-icon">🚫</span>Don't approach or get between a mother animal and her young</div>
+        <div class="dd-item dont-item"><span class="dd-icon">🚫</span>Don't leave the trailhead without telling someone your plans</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAIL ETIQUETTE -->
+<div class="resp-section etiquette-section">
+  <div class="resp-section-inner">
+    <p class="section-label">Trail Etiquette</p>
+    <h2 class="section-title">Sharing the Trail</h2>
+    <p class="section-sub">Simple rules that make trails better for everyone.</p>
+    <div class="etiquette-grid">
+      <div class="etiquette-card">
+        <div class="etiquette-icon">⬆️</div>
+        <h4>Yield to Uphill Hikers</h4>
+        <p>Hikers going uphill have the right of way. Step aside and let them pass — they're working harder and need momentum.</p>
+      </div>
+      <div class="etiquette-card">
+        <div class="etiquette-icon">🐴</div>
+        <h4>Horses Have Priority</h4>
+        <p>Horses and pack animals have the highest right of way. Step to the downhill side, speak calmly, and wait until they've passed.</p>
+      </div>
+      <div class="etiquette-card">
+        <div class="etiquette-icon">🚵</div>
+        <h4>Cyclists Yield to Hikers</h4>
+        <p>On multi-use trails, mountain bikers yield to hikers. But be safe — step aside if a fast rider is approaching.</p>
+      </div>
+      <div class="etiquette-card">
+        <div class="etiquette-icon">🔇</div>
+        <h4>Keep Noise Down</h4>
+        <p>Headphones if you want music. Nature sounds are why people come — don't deprive others of that experience.</p>
+      </div>
+      <div class="etiquette-card">
+        <div class="etiquette-icon">📸</div>
+        <h4>Don't Block the Trail</h4>
+        <p>Taking photos? Step off to the side. Don't stop in the middle of the trail, especially on narrow sections or switchbacks.</p>
+      </div>
+      <div class="etiquette-card">
+        <div class="etiquette-icon">🐕</div>
+        <h4>Responsible Dog Hiking</h4>
+        <p>Keep dogs leashed, carry poop bags and use them, and ask before letting your dog approach other hikers or their pets.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WILDLIFE GUIDE -->
+<div class="resp-section wildlife-section">
+  <div class="resp-section-inner">
+    <p class="section-label">Wildlife Safety</p>
+    <h2 class="section-title">Pacific Northwest Wildlife Guide</h2>
+    <p class="section-sub">What to do if you encounter these animals on the trail.</p>
+    <div class="wildlife-grid">
+      <div class="wildlife-card">
+        <div class="wildlife-header"><div class="wildlife-emoji">🐻</div><h4>Black Bear</h4></div>
+        <span class="wildlife-tag tag-caution">Use Caution</span>
+        <p>Make noise to avoid surprising them. If you see one, stay calm, speak firmly, and back away slowly. Never run. If attacked, fight back.</p>
+      </div>
+      <div class="wildlife-card">
+        <div class="wildlife-header"><div class="wildlife-emoji">🦁</div><h4>Cougar (Mountain Lion)</h4></div>
+        <span class="wildlife-tag tag-alert">Stay Alert</span>
+        <p>Rarely seen but present. If encountered, make yourself large, maintain eye contact, and back away. Never run or crouch down.</p>
+      </div>
+      <div class="wildlife-card">
+        <div class="wildlife-header"><div class="wildlife-emoji">🦌</div><h4>Elk & Deer</h4></div>
+        <span class="wildlife-tag tag-caution">Keep Distance</span>
+        <p>Beautiful but unpredictable, especially during rut (fall) and when calves are present. Stay at least 50 feet away and don't approach.</p>
+      </div>
+      <div class="wildlife-card">
+        <div class="wildlife-header"><div class="wildlife-emoji">🐍</div><h4>Rattlesnake</h4></div>
+        <span class="wildlife-tag tag-alert">Stay Alert</span>
+        <p>Found in dry, rocky areas below 5,000 ft. Watch where you step and put your hands. If bitten, stay calm and get to hospital immediately.</p>
+      </div>
+      <div class="wildlife-card">
+        <div class="wildlife-header"><div class="wildlife-emoji">🦅</div><h4>Eagles & Owls</h4></div>
+        <span class="wildlife-tag tag-safe">Enjoy Safely</span>
+        <p>Common in the PNW. Observe from a distance — never approach nests. Protected by federal law. Keep dogs away from nesting areas.</p>
+      </div>
+      <div class="wildlife-card">
+        <div class="wildlife-header"><div class="wildlife-emoji">🐿️</div><h4>Marmots & Pikas</h4></div>
+        <span class="wildlife-tag tag-safe">Enjoy Safely</span>
+        <p>Adorable alpine residents. Never feed them — human food disrupts their hibernation cycles. Watch and photograph from a distance.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMERGENCY PREPAREDNESS -->
+<div class="emergency-section">
+  <div class="emergency-inner">
+    <p class="section-label">Be Prepared</p>
+    <h2 class="section-title">Emergency Preparedness</h2>
+    <p class="section-sub">Know what to do before something goes wrong. Preparation saves lives.</p>
+    <div class="emergency-grid">
+      <div class="emergency-card">
+        <h4>🆘 If You Get Lost</h4>
+        <ul>
+          <li>Stop, stay calm, and don't panic</li>
+          <li>Stay put — rescuers look where you were last seen</li>
+          <li>Use a whistle: 3 blasts = universal distress signal</li>
+          <li>If you must move, follow water downhill to civilization</li>
+          <li>Use a signal mirror or bright clothing to attract attention</li>
+        </ul>
+      </div>
+      <div class="emergency-card">
+        <h4>🤕 If Someone Is Injured</h4>
+        <ul>
+          <li>Keep the injured person still and warm</li>
+          <li>Call 911 if you have cell signal — give GPS coordinates if possible</li>
+          <li>Send two people for help; never leave someone alone</li>
+          <li>Use a first aid kit for wounds, blisters, or sprains</li>
+          <li>For suspected fractures: splint and don't move the joint</li>
+        </ul>
+      </div>
+      <div class="emergency-card">
+        <h4>⛈️ Caught in Bad Weather</h4>
+        <ul>
+          <li>Turn around early — don't summit if weather is closing in</li>
+          <li>Seek shelter below treeline in a lightning storm</li>
+          <li>Avoid lone trees, ridges, and open water in lightning</li>
+          <li>For hypothermia: get dry, add layers, share body heat</li>
+          <li>For severe weather: deploy emergency bivy and wait it out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAKE THE PLEDGE -->
+<div class="pledge-section">
+  <div class="pledge-inner">
+    <h2>Take the Hiker's Pledge</h2>
+    <p>Join over 12,400 Pacific Northwest hikers who have committed to hiking responsibly, protecting our trails, and leaving wild places better than they found them.</p>
+    <div id="pledge-form-wrap">
+      <div class="pledge-form">
+        <input type="text" id="pledge-name" placeholder="Your name">
+        <input type="email" id="pledge-email" placeholder="Your email address">
+      </div>
+      <button class="btn-pledge" onclick="takePledge()">I Pledge to Hike Responsibly 🌲</button>
+    </div>
+    <div class="pledge-success" id="pledge-success">🌲 Thank you, <span id="pledge-thankyou-name"></span>! Your pledge has been recorded. Welcome to the community of responsible hikers.</div>
+    <p class="pledge-count" id="pledge-count">12,447 hikers have taken the pledge</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="trails.html">Find Trails</a></li>
+        <li><a href="responsible.html">Hike Responsibly</a></li>
+        <li><a href="gear-checklist.html">Gear Checklist</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://www.wta.org" target="_blank">WTA</a></li>
+        <li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Great Outdoors. All rights reserved.</p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  function toggleLNT(header) {
+    const card = header.closest('.lnt-card');
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.lnt-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  function takePledge() {
+    const name = document.getElementById('pledge-name').value.trim();
+    const email = document.getElementById('pledge-email').value.trim();
+    if (!name) { document.getElementById('pledge-name').style.borderColor = '#ef4444'; return; }
+    if (!email || !email.includes('@')) { document.getElementById('pledge-email').style.borderColor = '#ef4444'; return; }
+    localStorage.setItem('hikePledge', JSON.stringify({ name, email }));
+    document.getElementById('pledge-form-wrap').style.display = 'none';
+    document.getElementById('pledge-success').style.display = 'block';
+    document.getElementById('pledge-thankyou-name').textContent = name;
+    const base = 12447;
+    document.getElementById('pledge-count').textContent = (base + 1).toLocaleString() + ' hikers have taken the pledge';
+  }
+
+  // Restore pledge if already taken
+  const existing = JSON.parse(localStorage.getItem('hikePledge') || 'null');
+  if (existing) {
+    document.getElementById('pledge-form-wrap').style.display = 'none';
+    document.getElementById('pledge-success').style.display = 'block';
+    document.getElementById('pledge-thankyou-name').textContent = existing.name;
+  }
+
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+<script src="../cookie-banner.js"></script>
+</body>
+</html>

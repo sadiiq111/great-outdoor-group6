@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trail Map - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .nav-donate { background: rgba(255,255,255,0.18); color: white !important; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); }
+
+    .map-page-header { padding: 32px 0 20px; }
+    .map-page-header h1 { font-size: 30px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .map-page-header p { color: #666; font-size: 16px; margin-bottom: 20px; }
+
+    .map-filter-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .map-filter-btn {
+      padding: 8px 20px; border-radius: 20px; border: 1.5px solid #ddd;
+      background: white; font-size: 14px; font-weight: 600; color: #555;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .map-filter-btn.active { background: #2d5016; color: white; border-color: #2d5016; }
+    .map-filter-btn:hover:not(.active) { background: #f3f4f6; }
+
+    .map-wrapper {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid #e5e7eb; margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .map-wrapper iframe { width: 100%; height: 520px; border: none; display: block; }
+    .map-note { font-size: 13px; color: #aaa; margin-bottom: 32px; text-align: right; }
+    .map-note a { color: #2d5016; }
+
+    .map-trails-heading { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 16px; }
+
+    /* Trail cards (same pattern as trails.html) */
+    .trail-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+    .trail-card { position: relative; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .trail-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .trail-info { padding: 14px 16px; }
+    .trail-info h3 { font-size: 18px; margin-bottom: 6px; }
+    .location { display: flex; align-items: center; gap: 4px; color: #666; margin-bottom: 8px; font-size: 13px; }
+    .location svg { width: 13px; height: 13px; stroke: currentColor; fill: none; flex-shrink: 0; }
+    .difficulty { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+    .difficulty.easy { background: #dcfce7; color: #166534; }
+    .difficulty.moderate { background: #fef9c3; color: #854d0e; }
+    .difficulty.hard { background: #fee2e2; color: #991b1b; }
+    .trail-stats { display: flex; gap: 12px; font-size: 13px; color: #666; margin-bottom: 10px; }
+    .trail-stats span { display: inline-flex; align-items: center; gap: 4px; }
+    .trail-stats svg { width: 13px; height: 13px; stroke: currentColor; fill: none; }
+    .btn-view-map {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #f0f4ed; color: #2d5016; border: none; border-radius: 20px;
+      padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: background 0.15s;
+    }
+    .btn-view-map:hover { background: #dce8d4; }
+    .badge { position: absolute; top: 12px; right: 12px; background: #6b3a2a; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .card-coords { display: none; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .trail-cards { grid-template-columns: 1fr; }
+      .map-wrapper iframe { height: 340px; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="account.html">My Account</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="main-content">
+
+  <div class="map-page-header">
+    <h1>Explore All Trails</h1>
+    <p>All 8 Pacific Northwest trails on one map. Click any card to view full details, conditions, and photos.</p>
+    <div class="map-filter-row">
+      <button class="map-filter-btn active" onclick="filterMap('all',this)">All Trails</button>
+      <button class="map-filter-btn" onclick="filterMap('easy',this)">Easy</button>
+      <button class="map-filter-btn" onclick="filterMap('moderate',this)">Moderate</button>
+      <button class="map-filter-btn" onclick="filterMap('hard',this)">Hard</button>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-wrapper">
+    <iframe
+      src="https://www.openstreetmap.org/export/embed.html?bbox=-123.2%2C47.2%2C-121.2%2C48.8&layer=mapnik"
+      title="Pacific Northwest Trail Map"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
+  <p class="map-note">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</p>
+
+  <!-- TRAIL CARDS -->
+  <h2 class="map-trails-heading">All Trails</h2>
+  <div class="trail-cards" id="map-trail-cards">
+
+    <div class="trail-card" data-difficulty="moderate">
+      <a href="trail-detail.html?trail=rattlesnake"><img src="../images/trail-1.jpg" alt="Rattlesnake Ledge"></a>
+      <div class="trail-info">
+        <h3>Rattlesnake Ledge</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>North Bend, WA</p>
+        <span class="difficulty moderate">Moderate</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>4.0 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2-3 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=rattlesnake" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="moderate">
+      <a href="trail-detail.html?trail=wallace"><img src="../images/trail-2.jpg" alt="Wallace Falls"></a>
+      <div class="trail-info">
+        <h3>Wallace Falls</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gold Bar, WA</p>
+        <span class="difficulty moderate">Moderate</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>5.6 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3-4 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=wallace" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="hard">
+      <a href="trail-detail.html?trail=lakeserene"><img src="../images/trail-3.jpg" alt="Lake Serene"></a>
+      <div class="trail-info">
+        <h3>Lake Serene</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Index, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>7.2 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4-5 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=lakeserene" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="easy">
+      <span class="badge">✦ Hidden Gem</span>
+      <a href="trail-detail.html?trail=ebeys"><img src="../images/trail-4.jpg" alt="Ebey's Landing"></a>
+      <div class="trail-info">
+        <h3>Ebey's Landing</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Whidbey Island, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>5.6 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2-3 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=ebeys" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="hard">
+      <a href="trail-detail.html?trail=snowlake"><img src="../images/trail-5.jpg" alt="Snow Lake"></a>
+      <div class="trail-info">
+        <h3>Snow Lake</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Snoqualmie Pass, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>7.2 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4-5 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=snowlake" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="easy">
+      <a href="trail-detail.html?trail=twinfalls"><img src="../images/trail-6.jpg" alt="Twin Falls"></a>
+      <div class="trail-info">
+        <h3>Twin Falls</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>North Bend, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>2.6 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1-2 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=twinfalls" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="hard">
+      <span class="badge">✦ Hidden Gem</span>
+      <a href="trail-detail.html?trail=oysterdome"><img src="../images/trail-7.jpg" alt="Oyster Dome"></a>
+      <div class="trail-info">
+        <h3>Oyster Dome</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Blanchard Mountain, WA</p>
+        <span class="difficulty hard">Hard</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>6.4 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3-4 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=oysterdome" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+    <div class="trail-card" data-difficulty="easy">
+      <a href="trail-detail.html?trail=franklinfalls"><img src="../images/trail-8.jpg" alt="Franklin Falls"></a>
+      <div class="trail-info">
+        <h3>Franklin Falls</h3>
+        <p class="location"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Snoqualmie Pass, WA</p>
+        <span class="difficulty easy">Easy</span>
+        <div class="trail-stats">
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>2.0 mi</span>
+          <span><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1-2 hrs</span>
+        </div>
+        <a href="trail-detail.html?trail=franklinfalls" class="btn-view-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          View Trail Details
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails.</p>
+    </div>
+    <div class="footer-col"><h4>Explore</h4><ul><li><a href="trails.html">Find Trails</a></li><li><a href="trip-planner.html">Trip Planner</a></li><li><a href="trail-map.html">Trail Map</a></li><li><a href="gear-checklist.html">Gear Checklist</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Resources</h4><ul><li><a href="https://www.wta.org" target="_blank">WTA</a></li><li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 The Great Outdoors. All rights reserved.</p></div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  function filterMap(type, btn) {
+    document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#map-trail-cards .trail-card').forEach(card => {
+      const d = card.dataset.difficulty;
+      card.style.display = (type === 'all' || d === type) ? '' : 'none';
+    });
+  }
+
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
