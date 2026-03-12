@@ -56,6 +56,41 @@ body {
   border-bottom: none;
 }
 
+/* Logged-in nav */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 16px;
+  color: white;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.nav-user-name {
+  font-weight: 600;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-logout {
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 20px;
+  padding: 5px 14px;
+  color: white;
+  font-size: 14px;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nav-logout:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: white;
+}
+
 /* HERO */
 .hero {
   position: relative;

@@ -514,6 +514,12 @@
 </footer>
 
 <script>
+  // If already logged in, skip the form
+  (function() {
+    const raw = sessionStorage.getItem('goCurrentUser') || localStorage.getItem('goCurrentUser');
+    if (raw) { window.location.replace('../index.html'); }
+  })();
+
   lucide.createIcons();
 
   const hamburger = document.getElementById('hamburger');
