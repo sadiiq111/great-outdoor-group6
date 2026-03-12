@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Support trail conservation in the Pacific Northwest. Your donation funds trail maintenance, native planting, education, and volunteer events.">
+  <title>Donate - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand svg {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .nav-auth {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 24px;
+    }
+    .btn-login {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .btn-signup {
+      background: #4a90d9;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .nav-donate {
+      background: rgba(255,255,255,0.18);
+      color: white !important;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: background 0.2s;
+    }
+    .nav-donate:hover {
+      background: rgba(255,255,255,0.3) !important;
+    }
+
+    /* DONATE HERO */
+    .donate-hero {
+      background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 100%);
+      padding: 80px 16px 60px;
+      text-align: center;
+      color: white;
+    }
+    .donate-hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .donate-hero h1 {
+      font-size: 40px;
+      margin-bottom: 16px;
+      color: white;
+    }
+    .donate-hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* IMPACT STRIP */
+    .impact-strip {
+      background: #f8f8f8;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 40px 16px;
+    }
+    .impact-strip-inner {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .impact-card {
+      padding: 24px 16px;
+    }
+    .impact-card .icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+    .impact-card h3 {
+      font-size: 20px;
+      font-weight: bold;
+      color: #2d5016;
+      margin-bottom: 8px;
+    }
+    .impact-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* DONATE FORM SECTION */
+    .donate-page-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 64px 16px;
+    }
+    .donate-page-section h2 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    .donate-page-section .sub {
+      text-align: center;
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    .donate-form-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .donate-label {
+      color: #444;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .donate-amounts {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .amount-btn {
+      background: #f3f4f6;
+      border: 2px solid #e5e7eb;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 80px;
+    }
+    .amount-btn:hover {
+      border-color: #2d5016;
+      color: #2d5016;
+    }
+    .amount-btn.active {
+      background: #2d5016;
+      border-color: #2d5016;
+      color: white;
+    }
+    .donate-custom {
+      display: flex;
+      align-items: center;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      transition: border-color 0.2s;
+    }
+    .donate-custom:focus-within { border-color: #2d5016; }
+    .custom-prefix {
+      padding: 12px 14px;
+      background: #f3f4f6;
+      color: #666;
+      font-size: 18px;
+      font-weight: bold;
+      border-right: 2px solid #e5e7eb;
+    }
+    .donate-custom input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 12px 14px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    /* FREQUENCY TOGGLE */
+    .frequency-toggle {
+      display: flex;
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 28px;
+      gap: 4px;
+    }
+    .freq-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .freq-btn.active {
+      background: white;
+      color: #2d5016;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-donate {
+      background: #2d5016;
+      color: white;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    .btn-donate:hover { background: #3d6b1f; }
+    .donate-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #999;
+      text-align: center;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 28px 0;
+    }
+    .donate-form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    /* WHERE MONEY GOES */
+    .where-section {
+      background: #f8f8f8;
+      padding: 64px 16px;
+      text-align: center;
+    }
+    .where-section h2 {
+      font-size: 28px;
+      color: #222;
+      margin-bottom: 40px;
+    }
+    .where-grid {
+      max-width: 800px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      text-align: left;
+    }
+    .where-item {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .where-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .where-item h4 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 6px;
+    }
+    .where-item p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    .footer-full {
+      background: #2d5016;
+      color: white;
+      padding: 48px 16px 24px;
+    }
+    .footer-grid {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col h3 { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: white; }
+    .footer-col h4 { font-size: 16px; font-weight: bold; margin-bottom: 12px; color: white; }
+    .footer-col p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+    .footer-col ul { list-style: none; padding: 0; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+    .footer-col ul li a:hover { color: white; }
+    .footer-bottom-line {
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+    }
+    .footer-bottom-line p { color: rgba(255,255,255,0.7); font-size: 14px; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .donate-hero h1 { font-size: 28px; }
+      .impact-strip-inner { grid-template-columns: 1fr; gap: 8px; }
+      .where-grid { grid-template-columns: 1fr; }
+      .donate-form-card { padding: 24px 16px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Find Trails</a>
+      <a href="responsible.html">Responsible Recreation</a>
+      <a href="about.html">About</a>
+      <a href="news.html">News</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="donate-hero">
+  <div class="donate-hero-badge">&#10084;&#65039; Support Conservation</div>
+  <h1>Help Us Protect These Trails</h1>
+  <p>Your donation supports trail maintenance, conservation efforts, and helps keep the Pacific Northwest wild and accessible for future generations.</p>
+</div>
+
+<!-- IMPACT STRIP -->
+<div class="impact-strip">
+  <div class="impact-strip-inner">
+    <div class="impact-card">
+      <div class="icon">&#127807;</div>
+      <h3>$10</h3>
+      <p>Plants 5 native trees along damaged trail corridors</p>
+    </div>
+    <div class="impact-card">
+      <div class="icon">&#128739;&#65039;</div>
+      <h3>$25</h3>
+      <p>Maintains one full mile of hiking trail</p>
+    </div>
+    <div class="impact-card">
+      <div class="icon">&#9851;&#65039;</div>
+      <h3>$50</h3>
+      <p>Funds a community trail cleanup event</p>
+    </div>
+  </div>
+</div>
+
+<!-- DONATE FORM -->
+<div class="donate-page-section">
+  <h2>Make a Donation</h2>
+  <p class="sub">Every dollar goes directly to trail conservation and maintenance.</p>
+
+  <div class="donate-form-card">
+
+    <!-- FREQUENCY -->
+    <div class="frequency-toggle">
+      <button class="freq-btn active" onclick="setFreq(this)">One-time</button>
+      <button class="freq-btn" onclick="setFreq(this)">Monthly</button>
+    </div>
+
+    <!-- AMOUNTS -->
+    <span class="donate-label">Choose an amount:</span>
+    <div class="donate-amounts">
+      <button class="amount-btn" onclick="selectAmount(this)">$10</button>
+      <button class="amount-btn active" onclick="selectAmount(this)">$25</button>
+      <button class="amount-btn" onclick="selectAmount(this)">$50</button>
+      <button class="amount-btn" onclick="selectAmount(this)">$100</button>
+    </div>
+
+    <!-- CUSTOM -->
+    <div class="donate-custom">
+      <span class="custom-prefix">$</span>
+      <input type="number" id="custom-amount" placeholder="Custom amount" min="1" oninput="clearAmountBtns()">
+    </div>
+
+    <hr class="divider">
+
+    <button class="btn-donate" onclick="handleDonate()">Donate Now</button>
+    <p class="donate-note">&#128274; Secure payment &nbsp;&bull;&nbsp; 100% goes to trail conservation</p>
+  </div>
+</div>
+
+<!-- WHERE MONEY GOES -->
+<div class="where-section">
+  <h2>Where Your Money Goes</h2>
+  <div class="where-grid">
+    <div class="where-item">
+      <span class="where-icon">&#128692;</span>
+      <div>
+        <h4>Trail Maintenance</h4>
+        <p>Repairing erosion, clearing debris, and rebuilding damaged sections to keep trails safe and accessible.</p>
+      </div>
+    </div>
+    <div class="where-item">
+      <span class="where-icon">&#127807;</span>
+      <div>
+        <h4>Native Planting</h4>
+        <p>Restoring native plant species along trail corridors to prevent erosion and protect wildlife habitat.</p>
+      </div>
+    </div>
+    <div class="where-item">
+      <span class="where-icon">&#128218;</span>
+      <div>
+        <h4>Education Programs</h4>
+        <p>Teaching Leave No Trace principles and responsible recreation to new and experienced hikers alike.</p>
+      </div>
+    </div>
+    <div class="where-item">
+      <span class="where-icon">&#128101;</span>
+      <div>
+        <h4>Volunteer Events</h4>
+        <p>Organizing community cleanup and trail-building days that bring people together to protect the outdoors.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="trails.html">Find Trails</a></li>
+        <li><a href="responsible.html">Hike Responsibly</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://www.wta.org" target="_blank">WTA</a></li>
+        <li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Great Outdoors. All rights reserved.</p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script src="../script.js"></script>
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  function setFreq(btn) {
+    document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function selectAmount(btn) {
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('custom-amount').value = '';
+  }
+
+  function clearAmountBtns() {
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  function handleDonate() {
+    const activeBtn = document.querySelector('.amount-btn.active');
+    const customVal = document.getElementById('custom-amount').value;
+    const freq = document.querySelector('.freq-btn.active').textContent.toLowerCase();
+    let amount;
+    if (customVal && parseInt(customVal) > 0) {
+      amount = parseInt(customVal);
+    } else if (activeBtn) {
+      amount = parseInt(activeBtn.textContent.replace('$', ''));
+    }
+    if (!amount) {
+      alert('Please select or enter a donation amount.');
+      return;
+    }
+    alert('Thank you for your ' + freq + ' $' + amount + ' donation! You will be redirected to our secure payment page.');
+  }
+</script>
+
+</body>
+</html>

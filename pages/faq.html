@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Frequently asked questions about The Great Outdoors — trails, safety, gear, permits, and more.">
+  <title>FAQ - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .nav-donate { background: rgba(255,255,255,0.18); color: white !important; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); transition: background 0.2s; }
+    .nav-donate:hover { background: rgba(255,255,255,0.3) !important; }
+    .page-hero { background: linear-gradient(135deg, #2d5016 0%, #4a7c2f 100%); color: white; padding: 60px 24px; text-align: center; }
+    .page-hero h1 { font-size: 38px; margin-bottom: 10px; }
+    .page-hero p { font-size: 17px; opacity: 0.88; }
+    .still-need-help { background: #f0f7eb; border-radius: 12px; padding: 32px; text-align: center; margin-top: 40px; }
+    .still-need-help h3 { font-size: 20px; margin-bottom: 8px; color: #1a1a1a; }
+    .still-need-help p { color: #555; margin-bottom: 16px; font-size: 15px; }
+    .still-need-help a { background: #2d5016; color: white; padding: 11px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+    .still-need-help a:hover { background: #3d6a20; }
+    @media (max-width: 768px) { .nav-auth { display: none; } .page-hero h1 { font-size: 26px; } }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="news.html">News</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="#" class="btn-login">Login</a>
+      <a href="#" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<div class="page-hero" id="main-content">
+  <h1>Frequently Asked Questions</h1>
+  <p>Everything you need to know before hitting the trail.</p>
+</div>
+
+<div class="faq-content">
+
+  <div class="faq-category">
+    <h2>Getting Started</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I find a trail that matches my fitness level?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Use the filter buttons on our <a href="trails.html" style="color:#2d5016">Trails page</a> to browse by difficulty — Easy, Moderate, or Hard. Each trail card also shows the total distance and estimated time so you can plan accordingly. If you're new to hiking, start with an Easy trail under 3 miles.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Are the trail distances one-way or round trip?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">All distances listed on this site are round trip unless otherwise noted. So a trail listed as 4.0 miles means 2 miles each way.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What is a "Hidden Gem" trail?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Hidden Gem trails are lesser-known routes that offer outstanding scenery or experiences but tend to see fewer visitors than popular trails. They're great options if you want to avoid crowds.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <h2>Safety & Preparation</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What should I bring on a day hike?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">The Ten Essentials for any day hike: navigation (map/GPS), sun protection, insulation (extra layers), illumination (headlamp), first-aid kit, fire starter, repair tools/knife, nutrition (extra food), hydration (extra water), and emergency shelter. Always tell someone where you're going and when you expect to return.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I check trail conditions before I go?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Check the <a href="https://www.wta.org" target="_blank" style="color:#2d5016">Washington Trails Association</a> website for recent trip reports, which are updated by hikers after their visit. Also check the Washington State Recreation and Conservation Office site for permit and closure information.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What should I do if I encounter wildlife on the trail?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Stay calm and give animals plenty of space. Never feed wildlife. For bears: make noise while hiking, carry bear spray, and know how to use it. For cougars: do not run, make yourself look large, and back away slowly. Always observe wildlife from a safe distance.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <h2>Permits & Passes</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do I need a pass to park at trailheads?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Many Washington trailheads require a <strong>Discover Pass</strong> ($30/year) or a <strong>Northwest Forest Pass</strong> ($30/year). Some parks require separate day-use fees. We recommend checking the specific trailhead requirements before heading out — details are on each trail's detail page.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Are dogs allowed on all trails?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Dog policies vary by trail and land management agency. In general, dogs must be on a leash 6 feet or shorter on all public lands. Some areas, such as national park trails, prohibit dogs entirely. Always check trail-specific rules before bringing your pet.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <h2>Leave No Trace</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What are the Leave No Trace principles?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">The seven principles are: Plan Ahead and Prepare, Travel and Camp on Durable Surfaces, Dispose of Waste Properly, Leave What You Find, Minimize Campfire Impacts, Respect Wildlife, and Be Considerate of Other Visitors. Learn more on our <a href="responsible.html" style="color:#2d5016">Hike Responsibly</a> page.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I dispose of human waste on the trail?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">If no restroom is available, dig a cat hole 6–8 inches deep, at least 200 feet (70 adult steps) from water, trails, and camp. Pack out all toilet paper in a sealed bag, or use natural materials and pack them out. In high-use alpine areas, a WAG bag (waste alleviation and gelling) is required — these are available at ranger stations.</div></div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <h2>About This Site</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I submit a trail condition update?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">You can leave a review on any trail detail page or <a href="contact.html" style="color:#2d5016">contact us</a> directly with condition updates. We also encourage hikers to submit trip reports directly to the <a href="https://www.wta.org" target="_blank" style="color:#2d5016">WTA</a>, which we reference for current conditions.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Where does my donation go?
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer"><div class="faq-answer-inner">Donations directly support trail maintenance, native plant restoration, community education programs, and volunteer events across the Pacific Northwest. Visit our <a href="donate.html" style="color:#2d5016">Donate page</a> to see the full breakdown of how funds are used.</div></div>
+    </div>
+  </div>
+
+  <div class="still-need-help">
+    <h3>Still have a question?</h3>
+    <p>We're happy to help. Send us a message and we'll get back to you within 1–2 business days.</p>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="trails.html">Find Trails</a></li>
+        <li><a href="responsible.html">Hike Responsibly</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://www.wta.org" target="_blank">WTA</a></li>
+        <li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Great Outdoors. All rights reserved.</p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

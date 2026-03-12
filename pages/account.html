@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .nav-donate { background: rgba(255,255,255,0.18); color: white !important; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); }
+
+    /* ── PROFILE HEADER ── */
+    .profile-header {
+      background: #f3f4f6;
+      padding: 40px 0 32px;
+      margin-bottom: 0;
+    }
+    .profile-header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .profile-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: #2d5016;
+      color: white;
+      font-size: 28px;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border: 4px solid white;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .profile-info { flex: 1; }
+    .profile-info h1 { font-size: 26px; font-weight: 800; color: #111; margin-bottom: 4px; }
+    .profile-info p { color: #888; font-size: 14px; margin-bottom: 12px; }
+    .btn-edit-profile {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 2px solid #2d5016; color: #2d5016; background: white;
+      padding: 7px 18px; border-radius: 20px; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.15s;
+    }
+    .btn-edit-profile:hover { background: #f0f4ed; }
+    .profile-stat-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .profile-pill {
+      background: white; border-radius: 20px; padding: 6px 14px;
+      font-size: 13px; font-weight: 600; color: #2d5016;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ── STATS CARDS ── */
+    .stats-section { background: white; border-bottom: 1px solid #e5e7eb; padding: 24px 0; }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 16px;
+      max-width: 900px; margin: 0 auto; padding: 0 24px;
+    }
+    .stat-card {
+      text-align: center; padding: 20px 12px; background: #f9fafb;
+      border-radius: 12px; border: 1px solid #e5e7eb;
+    }
+    .stat-card .num { font-size: 30px; font-weight: 800; color: #2d5016; }
+    .stat-card .lbl { font-size: 13px; color: #888; margin-top: 4px; }
+
+    /* ── SECTION WRAPPER ── */
+    .account-section { max-width: 900px; margin: 32px auto; padding: 0 24px; }
+    .section-heading { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 16px; }
+
+    /* ── SAVED TRAILS ── */
+    .saved-trail-item {
+      display: flex; align-items: center; gap: 16px;
+      background: white; border-radius: 12px; padding: 14px 16px;
+      border: 1px solid #e5e7eb; margin-bottom: 10px; text-decoration: none;
+      transition: box-shadow 0.15s;
+    }
+    .saved-trail-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .saved-trail-img { width: 72px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+    .saved-trail-info { flex: 1; }
+    .saved-trail-info strong { display: block; color: #111; font-size: 15px; margin-bottom: 3px; }
+    .saved-trail-info span { font-size: 13px; color: #888; }
+    .unsave-btn { background: none; border: none; cursor: pointer; color: #ccc; font-size: 20px; padding: 4px; transition: color 0.15s; }
+    .unsave-btn:hover { color: #e53e3e; }
+
+    /* ── ACHIEVEMENTS ── */
+    .achievements-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .achievement-card {
+      display: flex; align-items: center; gap: 16px;
+      background: white; border-radius: 12px; padding: 16px 18px;
+      border: 1px solid #e5e7eb;
+    }
+    .achievement-card.unlocked { background: #f0f4ed; border-color: #c3dab5; }
+    .achievement-icon { font-size: 32px; flex-shrink: 0; }
+    .achievement-card h4 { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 3px; }
+    .achievement-card p { font-size: 13px; color: #888; margin: 0; }
+    .achievement-card.unlocked h4 { color: #2d5016; }
+    .badge-unlocked { display: inline-block; background: #2d5016; color: white; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-top: 4px; font-weight: 600; }
+    .badge-locked { display: inline-block; background: #e5e7eb; color: #888; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
+
+    /* ── LEADERBOARD ── */
+    .leaderboard-table { width: 100%; border-collapse: collapse; }
+    .leaderboard-table th { text-align: left; font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; padding: 10px 14px; border-bottom: 2px solid #e5e7eb; }
+    .leaderboard-table td { padding: 12px 14px; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
+    .leaderboard-table tr.me { background: #f0f4ed; }
+    .rank-badge { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; }
+    .rank-1 { background: #fef3c7; color: #92400e; }
+    .rank-2 { background: #e5e7eb; color: #374151; }
+    .rank-3 { background: #fde8d8; color: #7c3626; }
+    .rank-other { background: #f3f4f6; color: #555; }
+    .hiker-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2d5016; color: white; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+    .hiker-name { display: flex; align-items: center; gap: 10px; }
+    .trail-badge-pill { background: #f0f4ed; color: #2d5016; font-size: 12px; padding: 3px 10px; border-radius: 10px; font-weight: 600; }
+
+    /* ── ACTIVITY FEED ── */
+    .activity-feed { display: flex; flex-direction: column; gap: 0; }
+    .activity-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 10px; height: 10px; border-radius: 50%; background: #2d5016; flex-shrink: 0; margin-top: 5px; }
+    .activity-text { flex: 1; font-size: 14px; color: #333; }
+    .activity-time { font-size: 12px; color: #aaa; white-space: nowrap; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .achievements-grid { grid-template-columns: 1fr; }
+      .profile-header-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="account.html">My Account</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<div id="main-content">
+
+  <!-- PROFILE HEADER -->
+  <div class="profile-header">
+    <div class="profile-header-inner">
+      <div class="profile-avatar">SJ</div>
+      <div class="profile-info">
+        <h1>Sarah Johnson</h1>
+        <p>Member since March 2024 · Seattle, WA</p>
+        <a href="#" class="btn-edit-profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit Profile
+        </a>
+        <div class="profile-stat-pills">
+          <span class="profile-pill">12 Trails Hiked</span>
+          <span class="profile-pill">47.3 Miles</span>
+          <span class="profile-pill">8 Reviews</span>
+          <span class="profile-pill">15 Photos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS CARDS -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="num">12</div><div class="lbl">Trails Hiked</div></div>
+      <div class="stat-card"><div class="num">47.3</div><div class="lbl">Miles Logged</div></div>
+      <div class="stat-card"><div class="num">8</div><div class="lbl">Reviews Written</div></div>
+      <div class="stat-card"><div class="num">15</div><div class="lbl">Photos Shared</div></div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- SAVED TRAILS -->
+    <div class="account-section">
+      <h2 class="section-heading">Saved Trails</h2>
+      <a href="trail-detail.html?trail=rattlesnake" class="saved-trail-item">
+        <img src="../images/trail-1.jpg" alt="Rattlesnake Ledge" class="saved-trail-img">
+        <div class="saved-trail-info">
+          <strong>Rattlesnake Ledge</strong>
+          <span>Moderate · 4.0 miles · North Bend, WA</span>
+        </div>
+        <button class="unsave-btn" onclick="event.preventDefault()" title="Remove from saved">♥</button>
+      </a>
+      <a href="trail-detail.html?trail=oysterdome" class="saved-trail-item">
+        <img src="../images/trail-7.jpg" alt="Oyster Dome" class="saved-trail-img">
+        <div class="saved-trail-info">
+          <strong>Oyster Dome</strong>
+          <span>Hard · 6.4 miles · Blanchard Mountain, WA</span>
+        </div>
+        <button class="unsave-btn" onclick="event.preventDefault()" title="Remove from saved">♥</button>
+      </a>
+      <a href="trail-detail.html?trail=twinfalls" class="saved-trail-item">
+        <img src="../images/trail-6.jpg" alt="Twin Falls" class="saved-trail-img">
+        <div class="saved-trail-info">
+          <strong>Twin Falls</strong>
+          <span>Easy · 2.6 miles · North Bend, WA</span>
+        </div>
+        <button class="unsave-btn" onclick="event.preventDefault()" title="Remove from saved">♥</button>
+      </a>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="account-section">
+      <h2 class="section-heading">Your Achievements</h2>
+      <div class="achievements-grid">
+        <div class="achievement-card unlocked">
+          <div class="achievement-icon">🏔️</div>
+          <div>
+            <h4>Peak Bagger</h4>
+            <p>Completed 5 mountain trails</p>
+            <span class="badge-unlocked">Unlocked</span>
+          </div>
+        </div>
+        <div class="achievement-card unlocked">
+          <div class="achievement-icon">⭐</div>
+          <div>
+            <h4>Trail Reviewer</h4>
+            <p>Written 5+ trail reviews</p>
+            <span class="badge-unlocked">Unlocked</span>
+          </div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">📷</div>
+          <div>
+            <h4>Photo Hunter</h4>
+            <p>Share 5 photos to unlock</p>
+            <span class="badge-locked">3 / 5 photos</span>
+          </div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">🎯</div>
+          <div>
+            <h4>Century Hiker</h4>
+            <p>Hike 100 total miles to unlock</p>
+            <span class="badge-locked">47.3 / 100 mi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="account-section">
+      <h2 class="section-heading">Community Leaderboard</h2>
+      <div style="background:white;border-radius:16px;border:1px solid #e5e7eb;overflow:hidden;">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Hiker</th>
+              <th>Miles</th>
+              <th>Trails</th>
+              <th>Badge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank-badge rank-1">1</span></td>
+              <td><div class="hiker-name"><div class="hiker-avatar">MR</div> Marcus R.</div></td>
+              <td>142 mi</td>
+              <td>28 trails</td>
+              <td><span class="trail-badge-pill">Trail Master</span></td>
+            </tr>
+            <tr class="me">
+              <td><span class="rank-badge rank-2">2</span></td>
+              <td><div class="hiker-name"><div class="hiker-avatar">SJ</div> Sarah J. <span style="font-size:11px;color:#2d5016;margin-left:4px;">(you)</span></div></td>
+              <td>98 mi</td>
+              <td>19 trails</td>
+              <td><span class="trail-badge-pill">Peak Bagger</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-3">3</span></td>
+              <td><div class="hiker-name"><div class="hiker-avatar">PT</div> Priya T.</div></td>
+              <td>87 mi</td>
+              <td>16 trails</td>
+              <td><span class="trail-badge-pill">Hidden Gem Hunter</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-other">4</span></td>
+              <td><div class="hiker-name"><div class="hiker-avatar">DK</div> David K.</div></td>
+              <td>71 mi</td>
+              <td>14 trails</td>
+              <td><span class="trail-badge-pill">Trail Reviewer</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-other">5</span></td>
+              <td><div class="hiker-name"><div class="hiker-avatar">AL</div> Amy L.</div></td>
+              <td>65 mi</td>
+              <td>12 trails</td>
+              <td><span class="trail-badge-pill">Explorer</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="account-section">
+      <h2 class="section-heading">Recent Activity</h2>
+      <div style="background:white;border-radius:16px;border:1px solid #e5e7eb;padding:8px 20px;">
+        <div class="activity-feed">
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text">Saved <strong>Rattlesnake Ledge</strong> to your trail list</div>
+            <div class="activity-time">2 days ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text">Left a 5-star review on <strong>Wallace Falls</strong></div>
+            <div class="activity-time">1 week ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text">Uploaded 3 photos to <strong>Lake Serene</strong></div>
+            <div class="activity-time">2 weeks ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text">Completed <strong>Oyster Dome</strong> — earned Hidden Gem Hunter badge</div>
+            <div class="activity-time">3 weeks ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text">Joined The Great Outdoors community</div>
+            <div class="activity-time">March 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+    </div>
+    <div class="footer-col"><h4>Explore</h4><ul><li><a href="trails.html">Find Trails</a></li><li><a href="trip-planner.html">Trip Planner</a></li><li><a href="trail-map.html">Trail Map</a></li><li><a href="gear-checklist.html">Gear Checklist</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Resources</h4><ul><li><a href="https://www.wta.org" target="_blank">WTA</a></li><li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 The Great Outdoors. All rights reserved.</p></div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

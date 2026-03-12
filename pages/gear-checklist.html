@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gear Checklist - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-auth { display: flex; align-items: center; gap: 12px; margin-left: 24px; }
+    .btn-login { color: white; text-decoration: none; font-size: 15px; }
+    .btn-signup { background: #4a90d9; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: bold; }
+    .nav-donate { background: rgba(255,255,255,0.18); color: white !important; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); }
+
+    .gear-header { padding: 36px 0 24px; }
+    .gear-header h1 { font-size: 32px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .gear-header p { color: #666; font-size: 16px; }
+
+    /* ── TABS ── */
+    .gear-tabs { display: flex; gap: 4px; border-bottom: 2px solid #e5e7eb; margin-bottom: 28px; }
+    .gear-tab {
+      padding: 10px 28px; font-size: 15px; font-weight: 600; color: #888;
+      background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent;
+      margin-bottom: -2px; transition: color 0.15s, border-color 0.15s;
+    }
+    .gear-tab.active { color: #2d5016; border-bottom-color: #2d5016; }
+    .gear-tab:hover:not(.active) { color: #555; }
+
+    /* ── PANEL ── */
+    .gear-panel { display: none; }
+    .gear-panel.active { display: block; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .panel-header h2 { font-size: 20px; font-weight: 700; color: #111; margin: 0; }
+    .panel-actions { display: flex; gap: 8px; }
+    .btn-check-all, .btn-uncheck-all {
+      padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: 1.5px solid #ddd; background: white; color: #555;
+      transition: background 0.15s;
+    }
+    .btn-check-all:hover { background: #f0f4ed; border-color: #2d5016; color: #2d5016; }
+    .btn-uncheck-all:hover { background: #f9fafb; }
+
+    /* ── CHECKLIST ITEMS ── */
+    .checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: white; border-radius: 10px; padding: 14px 16px;
+      border: 1.5px solid #e5e7eb; cursor: pointer; transition: background 0.12s;
+    }
+    .check-item:hover { background: #f9fafb; }
+    .check-item.checked { background: #f0f4ed; border-color: #c3dab5; }
+    .check-item input[type=checkbox] { width: 18px; height: 18px; accent-color: #2d5016; cursor: pointer; flex-shrink: 0; margin-top: 1px; }
+    .check-item-body { flex: 1; }
+    .check-item-name { font-size: 15px; font-weight: 600; color: #111; transition: color 0.12s; }
+    .check-item.checked .check-item-name { text-decoration: line-through; color: #aaa; }
+    .check-item-note { font-size: 13px; color: #888; margin-top: 2px; }
+
+    .section-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #aaa; margin: 20px 0 8px;
+    }
+
+    /* ── PRINT BUTTON ── */
+    .print-row { margin-bottom: 32px; }
+    .btn-print {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #2d5016; color: white; border: none; border-radius: 24px;
+      padding: 11px 24px; font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-print:hover { background: #3a6b1e; }
+    .btn-print svg { width: 16px; height: 16px; stroke: white; fill: none; stroke-width: 2; }
+
+    /* ── SEASONAL TIPS ── */
+    .seasonal-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 48px; }
+    .season-card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 20px; }
+    .season-icon { font-size: 28px; margin-bottom: 10px; }
+    .season-card h3 { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .season-card ul { margin: 0; padding-left: 18px; }
+    .season-card li { font-size: 14px; color: #555; margin-bottom: 4px; }
+
+    @media (max-width: 768px) {
+      .nav-auth { display: none; }
+      .seasonal-grid { grid-template-columns: 1fr; }
+      .gear-tab { padding: 10px 16px; font-size: 14px; }
+    }
+
+    @media print {
+      .site-header, .site-footer, .gear-tabs, .panel-actions, .print-row, .back-to-top, .seasonal-grid { display: none !important; }
+      .gear-panel { display: block !important; }
+      .check-item { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
+      </svg>
+      The Great Outdoors
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="account.html">My Account</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
+    </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="main-content">
+
+  <div class="gear-header">
+    <h1>🎒 Gear Checklist</h1>
+    <p>Know exactly what to pack for every trail. Select your difficulty level and check off items as you pack.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="gear-tabs">
+    <button class="gear-tab active" onclick="switchTab('easy',this)">Easy</button>
+    <button class="gear-tab" onclick="switchTab('moderate',this)">Moderate</button>
+    <button class="gear-tab" onclick="switchTab('hard',this)">Hard / Overnight</button>
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="print-row">
+    <button class="btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print Checklist
+    </button>
+  </div>
+
+  <!-- EASY PANEL -->
+  <div class="gear-panel active" id="panel-easy">
+    <div class="panel-header">
+      <h2>Easy Trail Essentials</h2>
+      <div class="panel-actions">
+        <button class="btn-check-all" onclick="checkAll('easy')">Check All</button>
+        <button class="btn-uncheck-all" onclick="uncheckAll('easy')">Uncheck All</button>
+      </div>
+    </div>
+    <div class="section-label">Hydration &amp; Nutrition</div>
+    <div class="checklist" id="checklist-easy">
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Water (16 oz minimum)</div><div class="check-item-note">Bring more on warm days — aim for 16 oz per hour</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Trail snacks</div><div class="check-item-note">Energy bars, nuts, dried fruit, or a sandwich</div></div></label>
+      <div class="section-label">Sun &amp; Weather</div>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Sunscreen (SPF 30+)</div><div class="check-item-note">Even on cloudy days in the PNW</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Hat or cap</div><div class="check-item-note">Sun protection and warmth on cooler days</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Light jacket or windbreaker</div><div class="check-item-note">Weather can change quickly in the Pacific Northwest</div></div></label>
+      <div class="section-label">Footwear &amp; Clothing</div>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Comfortable walking shoes</div><div class="check-item-note">Sneakers or trail runners are fine for easy trails</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Moisture-wicking socks</div><div class="check-item-note">Avoid cotton socks — they cause blisters</div></div></label>
+      <div class="section-label">Navigation &amp; Safety</div>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Phone (charged)</div><div class="check-item-note">Download offline maps before you go</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Trail map or app</div><div class="check-item-note">AllTrails, Gaia GPS, or a printed map</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="easy"><div class="check-item-body"><div class="check-item-name">Insect repellent</div><div class="check-item-note">Especially May–August in forested trails</div></div></label>
+    </div>
+  </div>
+
+  <!-- MODERATE PANEL -->
+  <div class="gear-panel" id="panel-moderate">
+    <div class="panel-header">
+      <h2>Moderate Trail Pack List</h2>
+      <div class="panel-actions">
+        <button class="btn-check-all" onclick="checkAll('moderate')">Check All</button>
+        <button class="btn-uncheck-all" onclick="uncheckAll('moderate')">Uncheck All</button>
+      </div>
+    </div>
+    <div class="checklist" id="checklist-moderate">
+      <div class="section-label">Everything in Easy, plus…</div>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Hiking boots (ankle support)</div><div class="check-item-note">Waterproof boots recommended for wet PNW trails</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Trekking poles</div><div class="check-item-note">Reduce knee strain on descents; collapsible pairs are great</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Extra water (32 oz+)</div><div class="check-item-note">Aim for 0.5 L per hour of hiking</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">First aid kit</div><div class="check-item-note">Bandages, blister pads, antiseptic wipes, ibuprofen</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Rain jacket</div><div class="check-item-note">Waterproof, not just water-resistant — essential in the PNW</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Headlamp + extra batteries</div><div class="check-item-note">In case your hike runs longer than planned</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Emergency whistle</div><div class="check-item-note">Louder than your voice — attach to pack strap</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Compass or GPS device</div><div class="check-item-note">Backup navigation when phone loses signal</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Day pack (20–25L)</div><div class="check-item-note">Enough room for layers, food, water, and safety gear</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="moderate"><div class="check-item-body"><div class="check-item-name">Energy-dense food (lunch + snacks)</div><div class="check-item-note">Plan for ~200–300 calories per hour of hiking</div></div></label>
+    </div>
+  </div>
+
+  <!-- HARD PANEL -->
+  <div class="gear-panel" id="panel-hard">
+    <div class="panel-header">
+      <h2>Hard / Multi-Day Pack List</h2>
+      <div class="panel-actions">
+        <button class="btn-check-all" onclick="checkAll('hard')">Check All</button>
+        <button class="btn-uncheck-all" onclick="uncheckAll('hard')">Uncheck All</button>
+      </div>
+    </div>
+    <div class="checklist" id="checklist-hard">
+      <div class="section-label">Everything in Moderate, plus…</div>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Backpack (30L+)</div><div class="check-item-note">Fitted pack with hip belt to distribute weight</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Insulating mid-layer (fleece/down)</div><div class="check-item-note">Temperatures drop fast above treeline</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Microspikes or crampons (seasonal)</div><div class="check-item-note">Required for many Cascades trails Oct–June</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Water filter or purification tablets</div><div class="check-item-note">Filter all backcountry water sources</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Emergency shelter / bivy sack</div><div class="check-item-note">Lightweight thermal bivy for unexpected overnights</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">2-day food supply</div><div class="check-item-note">High-calorie, lightweight — freeze-dried meals work great</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Bear canister (where required)</div><div class="check-item-note">Check regulations for your specific trail area</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Satellite communicator (Garmin inReach)</div><div class="check-item-note">Two-way messaging when out of cell range</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Permit (if required)</div><div class="check-item-note">Many popular Cascades trails require advance permits</div></div></label>
+      <label class="check-item"><input type="checkbox" data-group="hard"><div class="check-item-body"><div class="check-item-name">Trekking poles (mandatory)</div><div class="check-item-note">Essential for steep descents and snow crossings</div></div></label>
+    </div>
+  </div>
+
+  <!-- SEASONAL TIPS -->
+  <h2 style="font-size:22px;font-weight:700;color:#111;margin-bottom:16px;margin-top:8px;">Seasonal Tips</h2>
+  <div class="seasonal-grid">
+    <div class="season-card">
+      <div class="season-icon">🌸</div>
+      <h3>Spring (Mar–May)</h3>
+      <ul>
+        <li>Expect muddy, saturated trails — gaiters recommended</li>
+        <li>Snow still present above 3,000 ft — check conditions</li>
+        <li>Wildflower blooms peak in May on lowland trails</li>
+        <li>Waterproof boots essential</li>
+      </ul>
+    </div>
+    <div class="season-card">
+      <div class="season-icon">☀️</div>
+      <h3>Summer (Jun–Aug)</h3>
+      <ul>
+        <li>Best conditions for alpine trails — limited snow</li>
+        <li>Start early to beat afternoon heat and crowds</li>
+        <li>Carry extra water — streams may be dry</li>
+        <li>Check for fire closures and smoke advisories</li>
+      </ul>
+    </div>
+    <div class="season-card">
+      <div class="season-icon">🍂</div>
+      <h3>Fall (Sep–Nov)</h3>
+      <ul>
+        <li>Stunning foliage — best colors in late September</li>
+        <li>Rain returns — pack rain gear always</li>
+        <li>Shorter days — bring a headlamp even for day hikes</li>
+        <li>Hunting season in some areas — wear bright colors</li>
+      </ul>
+    </div>
+    <div class="season-card">
+      <div class="season-icon">❄️</div>
+      <h3>Winter (Dec–Feb)</h3>
+      <ul>
+        <li>Many alpine trails closed — stick to lowland routes</li>
+        <li>Microspikes required on most trails</li>
+        <li>Shorter daylight — plan for 4–5 hours of light max</li>
+        <li>Franklin Falls and Twin Falls stay open year-round</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails.</p>
+    </div>
+    <div class="footer-col"><h4>Plan</h4><ul><li><a href="trails.html">Find Trails</a></li><li><a href="trip-planner.html">Trip Planner</a></li><li><a href="trail-map.html">Trail Map</a></li><li><a href="gear-checklist.html">Gear Checklist</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+    <div class="footer-col"><h4>Resources</h4><ul><li><a href="https://www.wta.org" target="_blank">WTA</a></li><li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 The Great Outdoors. All rights reserved.</p></div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  const STORAGE_KEY = 'gearChecklist';
+
+  function switchTab(id, btn) {
+    document.querySelectorAll('.gear-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.gear-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+
+  function checkAll(group) {
+    document.querySelectorAll(`input[data-group="${group}"]`).forEach(cb => {
+      cb.checked = true;
+      cb.closest('.check-item').classList.add('checked');
+    });
+    saveState();
+  }
+
+  function uncheckAll(group) {
+    document.querySelectorAll(`input[data-group="${group}"]`).forEach(cb => {
+      cb.checked = false;
+      cb.closest('.check-item').classList.remove('checked');
+    });
+    saveState();
+  }
+
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
+      state[i] = cb.checked;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function loadState() {
+    const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    document.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
+      if (state[i]) {
+        cb.checked = true;
+        cb.closest('.check-item').classList.add('checked');
+      }
+    });
+  }
+
+  // Toggle checked state on click
+  document.querySelectorAll('.check-item').forEach(item => {
+    item.addEventListener('change', () => {
+      const cb = item.querySelector('input');
+      item.classList.toggle('checked', cb.checked);
+      saveState();
+    });
+  });
+
+  loadState();
+
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

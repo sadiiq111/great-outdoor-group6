@@ -1,3 +1,4 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "great-outdoors"
+    "liveServer.settings.multiRootWorkspaceName": "great-outdoors",
+    "liveServer.settings.port": 3001
 }

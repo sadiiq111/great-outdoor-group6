@@ -3,10 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - The Great Outdoors</title>
+  <meta name="description" content="Learn about The Great Outdoors — our story, our team, and our mission to make Pacific Northwest hiking accessible and responsible.">
+  <title>About Us - The Great Outdoors</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d5016'%3E%3Cpath d='M12 2L6 11h3l-4 7h14l-4-7h3L12 2z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../styles.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    .nav-auth {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 24px;
+    }
+
+    .btn-login {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .btn-signup {
+      background: #4a90d9;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .nav-donate {
+      background: rgba(255,255,255,0.18);
+      color: white !important;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: background 0.2s;
+    }
+    .nav-donate:hover { background: rgba(255,255,255,0.3) !important; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand svg {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    /* ABOUT CONTENT */
     .about-content {
       max-width: 900px;
       margin: auto;
@@ -20,7 +70,7 @@
       color: #222;
     }
 
-    /* FOUNDER */
+    /* FOUNDER SECTION */
     .founder-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -55,7 +105,156 @@
       display: block;
     }
 
-    /* TEAM */
+    /* MISSION & VALUES */
+    .mission-section {
+      margin-bottom: 60px;
+    }
+
+    .mission-section h2 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #222;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+
+    .value-card {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .value-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(45, 80, 22, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .value-icon svg {
+      width: 32px;
+      height: 32px;
+      stroke: #2d5016;
+      color: #2d5016;
+    }
+
+    .value-card h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #222;
+    }
+
+    .value-card p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    /* COMMITMENT BANNER */
+    .commitment-banner {
+      background: rgba(45, 80, 22, 0.05);
+      border: 2px solid rgba(45, 80, 22, 0.2);
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 60px;
+    }
+
+    .commitment-banner h2 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      color: #222;
+    }
+
+    .commitment-banner p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .commitment-banner p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* FOOTER */
+    .footer-full {
+      background: #2d5016;
+      color: white;
+      padding: 48px 16px 24px;
+    }
+
+    .footer-grid {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: white;
+    }
+
+    .footer-col h4 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: white;
+    }
+
+    .footer-col p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-col ul li a:hover {
+      color: white;
+    }
+
+    .footer-bottom-line {
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .footer-bottom-line p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+    }
+
+    /* TEAM SECTION */
     .team-section {
       margin-bottom: 60px;
     }
@@ -115,102 +314,53 @@
       line-height: 1.7;
     }
 
-    /* MISSION & VALUES */
-    .mission-section {
-      margin-bottom: 60px;
-    }
-
-    .mission-section h2 {
-      font-size: 28px;
-      text-align: center;
-      margin-bottom: 40px;
-      color: #222;
-    }
-
-    .values-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 32px;
-    }
-
-    .value-card {
-      text-align: center;
-      padding: 24px;
-    }
-
-    .value-icon {
-      width: 64px;
-      height: 64px;
-      background: rgba(45, 80, 22, 0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-    }
-
-    .value-icon svg {
-      width: 32px;
-      height: 32px;
-      stroke: #2d5016;
-      color: #2d5016;
-    }
-
-    .value-card h3 {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #222;
-    }
-
-    .value-card p {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.7;
-    }
-
-    /* COMMITMENT */
-    .commitment-banner {
-      background: rgba(45, 80, 22, 0.05);
-      border: 2px solid rgba(45, 80, 22, 0.2);
-      border-radius: 12px;
-      padding: 40px;
-      margin-bottom: 60px;
-    }
-
-    .commitment-banner h2 {
-      font-size: 24px;
-      text-align: center;
-      margin-bottom: 24px;
-      color: #222;
-    }
-
-    .commitment-banner p {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .commitment-banner p:last-child { margin-bottom: 0; }
-
+    /* MOBILE */
     @media (max-width: 768px) {
-      .founder-section { grid-template-columns: 1fr; gap: 24px; }
-      .founder-image { order: -1; }
-      .values-grid { grid-template-columns: 1fr; gap: 16px; }
-      .team-grid { grid-template-columns: 1fr; gap: 20px; }
-      .about-content h1 { font-size: 26px; }
+      .founder-section {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .founder-image {
+        order: -1;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .nav-auth {
+        display: none;
+      }
+
+      .about-content h1 {
+        font-size: 26px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="../index.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>
-      </svg>The Great Outdoors
+      </svg>
+      The Great Outdoors
     </a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span>
@@ -219,11 +369,16 @@
     </button>
     <nav class="nav" id="nav">
       <a href="../index.html">Home</a>
-      <a href="trails.html">Find Trails</a>
-      <a href="responsible.html">Responsible Recreation</a>
-      <a href="about.html" class="active">About</a>
-      <a href="login.html" class="nav-login">Login</a>
+      <a href="trails.html">Trails</a>
+      <a href="responsible.html">Hike Responsibly</a>
+      <a href="about.html">About</a>
+      <a href="news.html">News</a>
+      <a href="donate.html" class="nav-donate">&#10084; Donate</a>
     </nav>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-login nav-login">Login</a>
+      <a href="#" class="btn-signup">Sign Up</a>
+    </div>
   </div>
 </header>
 
@@ -250,7 +405,7 @@
     <div class="team-grid">
 
       <div class="team-card">
-        <img class="team-card-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Sadiiq">
+        <img class="team-card-photo" src="../images/sadiiq.jpg" alt="Sadiiq">
         <div class="team-card-body">
           <h3>Sadiiq</h3>
           <p class="team-card-role">Technology Developer</p>
@@ -259,7 +414,7 @@
       </div>
 
       <div class="team-card">
-        <img class="team-card-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Christopher">
+        <img class="team-card-photo" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Christopher">
         <div class="team-card-body">
           <h3>Christopher</h3>
           <p class="team-card-role">Story Teller</p>
@@ -285,19 +440,25 @@
     <div class="values-grid">
 
       <div class="value-card">
-        <div class="value-icon"><i data-lucide="target"></i></div>
+        <div class="value-icon">
+          <i data-lucide="target"></i>
+        </div>
         <h3>Accessibility</h3>
         <p>Providing clear, accurate trail information that helps everyone find their perfect outdoor adventure, regardless of experience level.</p>
       </div>
 
       <div class="value-card">
-        <div class="value-icon"><i data-lucide="heart"></i></div>
+        <div class="value-icon">
+          <i data-lucide="heart"></i>
+        </div>
         <h3>Stewardship</h3>
         <p>Educating trail users about Leave No Trace principles and responsible recreation to preserve our wilderness for future generations.</p>
       </div>
 
       <div class="value-card">
-        <div class="value-icon"><i data-lucide="users"></i></div>
+        <div class="value-icon">
+          <i data-lucide="users"></i>
+        </div>
         <h3>Community</h3>
         <p>Building a community of outdoor enthusiasts who support each other and work together to protect the trails we love.</p>
       </div>
@@ -315,20 +476,66 @@
 
 </div>
 
-<footer class="footer">
-  <p>© 2026 The Great Outdoors. Explore safely and responsibly.</p>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand-col">
+      <a class="footer-logo" href="../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/></svg>
+        The Great Outdoors
+      </a>
+      <p>Discover the beauty of Pacific Northwest trails. Explore safely, tread lightly, leave no trace.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="trails.html">Find Trails</a></li>
+        <li><a href="responsible.html">Hike Responsibly</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://www.wta.org" target="_blank">WTA</a></li>
+        <li><a href="https://lnt.org" target="_blank">Leave No Trace</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 The Great Outdoors. All rights reserved.</p>
+  </div>
 </footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <script>
   lucide.createIcons();
   const hamburger = document.getElementById('hamburger');
   const nav = document.getElementById('nav');
   hamburger.addEventListener('click', () => nav.classList.toggle('open'));
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => nav.classList.remove('open'));
-  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
-<script src="../auth-nav.js"></script>
 
+<script src="../auth-nav.js"></script>
 </body>
 </html>
