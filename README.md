@@ -1,6 +1,5 @@
 # ***Class Project***
 
-
 # The Great Outdoors 🌲
 
 The Great Outdoors is a project dedicated to helping people explore the Pacific Northwest responsibly while protecting its natural landscapes.
@@ -17,10 +16,10 @@ The Great Outdoors is a project dedicated to helping people explore the Pacific 
 
 Founded in **2024**, **The Great Outdoors** aims to:
 
-- Promote responsible and sustainable outdoor exploration  
-- Improve access to reliable trail and safety information  
-- Encourage discovery of lesser-known trails to reduce overcrowding  
-- Support conservation and *Leave No Trace* ethics  
+- Promote responsible and sustainable outdoor exploration.  
+- Improve access to reliable trail and safety information. 
+- Encourage discovery of lesser-known trails to reduce overcrowding.  
+- Support conservation and *Leave No Trace* ethics.  
 
 ## 🧭 Vision
 
