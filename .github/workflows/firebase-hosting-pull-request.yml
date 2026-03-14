@@ -13,8 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IT115__WEB_DEMO }}
-          projectId: it115--web-demo
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_GREAT_OUTDOORS_B56A3 }}
+          projectId: the-great-outdoors-b56a3
